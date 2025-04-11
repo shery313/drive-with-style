@@ -64,10 +64,10 @@ const Home = () => {
               className="rounded-xl shadow-lg w-full h-auto "
               width={600}
               height={400}
-              // controls
+              controls
               autoPlay
               preload="none"
-              muted
+              // muted
             // poster="/ch.jpg"
             >
               <source src="/df.mp4" type="video/mp4" />
