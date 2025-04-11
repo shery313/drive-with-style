@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Calendar, Clock, User, Car, MapPin, CreditCard, Check } from "lucide-react";
+import { Calendar, Clock, User, MapPin, CreditCard, Check } from "lucide-react";
 import { motion } from "framer-motion";
 
 const BookingPage = () => {
@@ -28,7 +28,7 @@ const BookingPage = () => {
     { id: "limo", name: "Limousine", price: "$350/day" },
   ];
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -36,7 +36,7 @@ const BookingPage = () => {
   const nextStep = () => setStep(prev => prev + 1);
   const prevStep = () => setStep(prev => prev - 1);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e:any) => {
     e.preventDefault();
     // In a real app, you would handle form submission here
     console.log("Form submitted:", formData);
