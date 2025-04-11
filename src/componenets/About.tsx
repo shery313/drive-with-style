@@ -10,9 +10,9 @@ const About = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="text-4xl font-bold mb-4">About Driver With Style</h1>
+        <h1 className="text-4xl font-bold mb-4">About Drive With Style</h1>
         <p className="text-gray-600 dark:text-gray-300 text-lg">
-          At Driver With Style, we blend sophistication and convenience to bring you an unmatched car rental experience. Whether you need a luxurious ride for a business trip or a stylish drive for a night out — we’ve got you covered.
+          At Drive With Style, we blend sophistication and convenience to bring you an unmatched car rental experience. Whether you need a luxurious ride for a business trip or a stylish drive for a night out — we’ve got you covered.
         </p>
       </motion.section>
 

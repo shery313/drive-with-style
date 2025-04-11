@@ -34,15 +34,15 @@ const Contact = () => {
           <div className="space-y-6">
             <div className="flex items-center gap-4">
               <Phone className="text-blue-600" size={28} />
-              <span className="text-lg font-medium">+92 300 1234567</span>
+              <span className="text-lg font-medium">+92 312 5430959</span>
             </div>
             <div className="flex items-center gap-4">
               <Mail className="text-blue-600" size={28} />
-              <span className="text-lg font-medium">support@driverwithstyle.com</span>
+              <span className="text-lg font-medium">pakiidol@gmail.com</span>
             </div>
             <div className="flex items-center gap-4">
               <MapPin className="text-blue-600" size={28} />
-              <span className="text-lg font-medium">123 Luxury St, Lahore, Pakistan</span>
+              <span className="text-lg font-medium">Block#08 Flate#02, PHA Red Flate, G-10/2 Islamabad.</span>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ import About from './componenets/About'
 import Contact from './componenets/Conctact'
 import ScrollToTop from './componenets/ScrollToTop'
 import WhatsAppButton from './componenets/WhatsappButton.'
+import BookingPage from './componenets/BookingPage'
 
 
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/pricing" element={<Pricing  />} />
           <Route path="/about" element={<About  />} />
           <Route path="/contact" element={<Contact  />} />
+          <Route path="/book" element={<BookingPage  />} />
         </Routes>
         <Footer />
       
