@@ -109,7 +109,7 @@ const Home = () => {
       <section className="py-20 px-6 md:px-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto">
           <header className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">How Our Car Rental Service Works</h2>
+            <h2 className="text-3xl sm:text-4xl  font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">How Our Car Rental Service Works</h2>
             <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
               Getting your premium rental car is simple and straightforward with our 3-step process
             </p>
@@ -159,7 +159,7 @@ const Home = () => {
       <section className="py-16 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-6 md:px-20">
           <header className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Our Premium Fleet</h2>
+            <h2 className="text-3xl sm:text-4xl  font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Our Premium Fleet</h2>
             <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
               Explore our selection of luxury and executive vehicles
             </p>
@@ -239,7 +239,7 @@ const Home = () => {
       <section className="py-20 px-6 md:px-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto">
           <header className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Client Testimonials</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Client Testimonials</h2>
             <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
               Don't just take our word for it - hear what our clients say
             </p>
@@ -321,7 +321,7 @@ const Home = () => {
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <h2 className="text-3xl sm:text-4xl font-bold mb-6">Why Choose Our Service</h2>
+              <h2 className="text-3xl sm:text-4xl  font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Why Choose Our Service</h2>
 
               <div className="space-y-6">
                 {[
@@ -366,7 +366,7 @@ const Home = () => {
       <section className="py-20 px-6 md:px-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto">
           <header className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl sm:text-4xl  mb-4 font-extrabold  leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600" >Frequently Asked Questions</h2>
             <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
               Find answers to common questions about our car rental service
             </p>
