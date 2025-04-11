@@ -36,7 +36,7 @@ const Home = () => {
                 Book Now
               </Link>
             </div>
-            
+
             {/* Trust indicators */}
             <div className="mt-10 flex flex-wrap items-center gap-6 text-sm">
               <div className="flex items-center gap-2">
@@ -60,14 +60,20 @@ const Home = () => {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.7 }}
           >
-            <img
-              src="/car1.jpg"
-              alt="Luxury Mercedes-Benz S-Class for rent"
-              className="w-full rounded-xl shadow-2xl z-10 relative"
-              width={800}
-              height={600}
-              loading="eager"
-            />
+            <video
+              className="rounded-xl shadow-lg w-full h-auto "
+              width={600}
+              height={400}
+              // controls
+              autoPlay
+              preload="none"
+              muted
+            // poster="/ch.jpg"
+            >
+              <source src="/df.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-500 rounded-full opacity-20"></div>
             <div className="absolute -top-6 -left-6 w-40 h-40 bg-purple-500 rounded-full opacity-20"></div>
           </motion.div>
@@ -83,7 +89,7 @@ const Home = () => {
             { value: "24/7", label: "Availability", icon: Clock },
             { value: "100%", label: "Satisfaction", icon: Star },
           ].map((stat, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -108,23 +114,23 @@ const Home = () => {
               Getting your premium rental car is simple and straightforward with our 3-step process
             </p>
           </header>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
-              { 
-                title: "Select Your Vehicle", 
-                desc: "Browse our luxury fleet and choose your preferred make and model.", 
-                icon: Car 
+              {
+                title: "Select Your Vehicle",
+                desc: "Browse our luxury fleet and choose your preferred make and model.",
+                icon: Car
               },
-              { 
-                title: "Book Your Ride", 
-                desc: "Reserve online or call us directly. We offer flexible booking options.", 
-                icon: Calendar 
+              {
+                title: "Book Your Ride",
+                desc: "Reserve online or call us directly. We offer flexible booking options.",
+                icon: Calendar
               },
-              { 
-                title: "Enjoy Your Journey", 
-                desc: "Your chauffeur will arrive on time for a seamless experience.", 
-                icon: Smile 
+              {
+                title: "Enjoy Your Journey",
+                desc: "Your chauffeur will arrive on time for a seamless experience.",
+                icon: Smile
               },
             ].map((step, i) => (
               <motion.article
@@ -158,24 +164,24 @@ const Home = () => {
               Explore our selection of luxury and executive vehicles
             </p>
           </header>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
-              { 
-                id: 1, 
-                model: "Mercedes-Benz S-Class", 
+              {
+                id: 1,
+                model: "Mercedes-Benz S-Class",
                 desc: "The ultimate in luxury sedans with premium comfort and technology.",
                 features: ["Chauffeur Included", "LED Ambient Lighting", "Massage Seats"]
               },
-              { 
-                id: 2, 
-                model: "BMW 7 Series", 
+              {
+                id: 2,
+                model: "BMW 7 Series",
                 desc: "Executive luxury with dynamic performance and elegant styling.",
                 features: ["Panoramic Roof", "Heated Seats", "Premium Sound"]
               },
-              { 
-                id: 3, 
-                model: "Range Rover Autobiography", 
+              {
+                id: 3,
+                model: "Range Rover Autobiography",
                 desc: "Sophisticated SUV with commanding presence and luxury interior.",
                 features: ["All-Wheel Drive", "Climate Control", "Privacy Shades"]
               },
@@ -196,7 +202,7 @@ const Home = () => {
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{vehicle.model}</h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-4">{vehicle.desc}</p>
-                  
+
                   <ul className="space-y-2 mb-6">
                     {vehicle.features.map((feature, i) => (
                       <li key={i} className="flex items-center gap-2 text-sm">
@@ -204,7 +210,7 @@ const Home = () => {
                       </li>
                     ))}
                   </ul>
-                  
+
                   <Link
                     to={`/fleet#car-${vehicle.id}`}
                     className="inline-block text-blue-600 dark:text-blue-400 font-medium hover:underline"
@@ -216,7 +222,7 @@ const Home = () => {
               </motion.article>
             ))}
           </div>
-          
+
           <div className="text-center mt-12">
             <Link
               to="/fleet"
@@ -238,7 +244,7 @@ const Home = () => {
               Don't just take our word for it - hear what our clients say
             </p>
           </header>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {[
               {
@@ -291,24 +297,24 @@ const Home = () => {
       <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-6 md:px-20">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
-            <motion.div 
+            <motion.div
               className="lg:w-1/2"
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
             >
-              <img 
-                src="/ch.jpg" 
-                alt="Professional chauffeur opening car door" 
+              <img
+                src="/ch.jpg"
+                alt="Professional chauffeur opening car door"
                 className="rounded-xl shadow-lg w-full"
                 width={600}
                 height={400}
                 loading="lazy"
               />
             </motion.div>
-            
-            <motion.div 
+
+            <motion.div
               className="lg:w-1/2"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -316,7 +322,7 @@ const Home = () => {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl sm:text-4xl font-bold mb-6">Why Choose Our Service</h2>
-              
+
               <div className="space-y-6">
                 {[
                   {
@@ -365,7 +371,7 @@ const Home = () => {
               Find answers to common questions about our car rental service
             </p>
           </header>
-          
+
           <div className="max-w-4xl mx-auto space-y-4">
             {[
               {
@@ -389,8 +395,8 @@ const Home = () => {
                 a: "All vehicles undergo regular maintenance, and our chauffeurs are trained in defensive driving. We also provide contactless service options."
               },
             ].map((item, i) => (
-              <details 
-                key={i} 
+              <details
+                key={i}
                 className="group bg-gray-50 dark:bg-gray-800 p-5 rounded-lg cursor-pointer"
               >
                 <summary className="flex justify-between items-center font-semibold list-none">
@@ -407,7 +413,7 @@ const Home = () => {
       {/* Final CTA Section */}
       <section className="py-20 px-6 md:px-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.h2 
+          <motion.h2
             className="text-3xl sm:text-4xl font-bold mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -416,7 +422,7 @@ const Home = () => {
           >
             Ready to Experience Premium Car Rental?
           </motion.h2>
-          <motion.p 
+          <motion.p
             className="text-xl mb-8 opacity-90"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -457,7 +463,7 @@ const Home = () => {
             Trusted By
           </h3>
           <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center">
-            {["https://osomehygiene.com/cdn/shop/files/osome_logo_brand_page-0001-1-21-25.jpg?v=1737454351", "https://bejaanhygiene.com/wp-content/uploads/2024/05/Bejaan-Logo-min.png", "/infinix.jpg", "/itel.jpg"].map((company, i) => (
+            {["https://osomehygiene.com/cdn/shop/files/osome_logo_brand_page-0001-1-21-25.jpg?v=1737454351", "https://d3fyizz0b46qgr.cloudfront.net/global/x_new/logo.svg","https://bejaanhygiene.com/wp-content/uploads/2024/05/Bejaan-Logo-min.png", "/infinix.jpg", "/itel.jpg"].map((company, i) => (
               <motion.div
                 key={i}
                 whileHover={{ scale: 1.05 }}

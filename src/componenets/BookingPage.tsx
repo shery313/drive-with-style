@@ -105,7 +105,7 @@ const BookingPage = () => {
               <div className="p-6 sm:p-8">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
                   <MapPin className="text-blue-600 dark:text-blue-400" size={24} />
-                  Trip Details
+                  Booking Details
                 </h2>
                 
                 <div className="space-y-6">
@@ -544,7 +544,7 @@ const BookingPage = () => {
         {/* Support Info */}
         {step !== 4 && (
           <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>Need help? Call our support team at <a href="tel:+923125430959" className="text-blue-600 dark:text-blue-400 hover:underline">(123) 456-7890</a></p>
+            <p>Need help? Call our support team at <a href="tel:+923125430959" className="text-blue-600 dark:text-blue-400 hover:underline">923125430959</a></p>
           </div>
         )}
       </div>

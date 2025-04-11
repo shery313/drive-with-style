@@ -47,7 +47,7 @@ const Footer = () => {
               <Phone size={16} /> +92 312 5430959
             </li>
             <li className="flex items-center gap-2">
-              <Mail size={16} /> pakiidol@gmail.com
+              <Mail size={16} /> DrivewithstyleRAC@gmail.com
             </li>
             <li className="flex items-center gap-2">
               <MapPin size={16} /> Block#08 Flate#02, PHA Red Flate, G-10/2 Islamabad.

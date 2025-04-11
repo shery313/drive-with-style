@@ -38,7 +38,7 @@ const Contact = () => {
             </div>
             <div className="flex items-center gap-4">
               <Mail className="text-blue-600" size={28} />
-              <span className="text-lg font-medium">pakiidol@gmail.com</span>
+              <span className="text-lg font-medium">DrivewithstyleRAC@gmail.com</span>
             </div>
             <div className="flex items-center gap-4">
               <MapPin className="text-blue-600" size={28} />
