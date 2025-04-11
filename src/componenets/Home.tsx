@@ -6,7 +6,7 @@ const Home = () => {
   return (
     <main className="min-h-screen bg-gradient-to-b px-8 from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden ">
         <div className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 max-w-7xl mx-auto">
           <motion.div
             className="md:w-1/2 z-10"
@@ -73,15 +73,15 @@ const Home = () => {
               <source src="/df.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-
+{/* 
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-500 rounded-full opacity-20"></div>
-            <div className="absolute -top-6 -left-6 w-40 h-40 bg-purple-500 rounded-full opacity-20"></div>
+            <div className="absolute -top-6 -left-6 w-40 h-40 bg-purple-500 rounded-full opacity-20"></div> */}
           </motion.div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="bg-blue-600 text-white py-12 dark:bg-blue-700">
+      <section className="bg-blue-600 text-white py-12 dark:bg-blue-700 ">
         <div className="max-w-7xl mx-auto px-6 md:px-20 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           {[
             { value: "500+", label: "Happy Clients", icon: Smile },
@@ -106,7 +106,7 @@ const Home = () => {
       </section>
 
       {/* How It Works Section */}
-      <section className="py-20 px-6 md:px-20 bg-white dark:bg-gray-900">
+      <section className="py-20  md:px-20 bg-white dark:bg-gray-900 ">
         <div className="max-w-7xl mx-auto">
           <header className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl  font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">How Our Car Rental Service Works</h2>
@@ -156,7 +156,7 @@ const Home = () => {
       </section>
 
       {/* Fleet Preview Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+      <section className="py-16 bg-gray-50 dark:bg-gray-800 ">
         <div className="max-w-7xl mx-auto px-6 md:px-20">
           <header className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl  font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Our Premium Fleet</h2>
@@ -236,7 +236,7 @@ const Home = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-20 px-6 md:px-20 bg-white dark:bg-gray-900">
+      <section className="py-20 px-6 md:px-20 bg-white dark:bg-gray-900 ">
         <div className="max-w-7xl mx-auto">
           <header className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Client Testimonials</h2>
@@ -294,7 +294,7 @@ const Home = () => {
       </section>
 
       {/* Features/Benefits Section */}
-      <section className="py-20 bg-gray-50 dark:bg-gray-800">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800 ">
         <div className="max-w-7xl mx-auto px-6 md:px-20">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
             <motion.div
@@ -363,7 +363,7 @@ const Home = () => {
       </section>
 
       {/* FAQ Section */}
-      <section className="py-20 px-6 md:px-20 bg-white dark:bg-gray-900">
+      <section className="py-20 px-6 md:px-20 bg-white dark:bg-gray-900 ">
         <div className="max-w-7xl mx-auto">
           <header className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl  mb-4 font-extrabold  leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600" >Frequently Asked Questions</h2>
@@ -457,7 +457,7 @@ const Home = () => {
       </section>
 
       {/* Trust Badges/Logos Section */}
-      <section className="py-12 bg-gray-50 dark:bg-gray-800">
+      <section className="py-12 bg-gray-50 dark:bg-gray-800 ">
         <div className="max-w-7xl mx-auto px-6 md:px-20">
           <h3 className="text-center text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-8">
             Trusted By
