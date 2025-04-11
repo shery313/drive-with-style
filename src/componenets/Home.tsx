@@ -67,7 +67,7 @@ const Home = () => {
               controls
               autoPlay
               preload="none"
-              // muted
+              muted
             // poster="/ch.jpg"
             >
               <source src="/df.mp4" type="video/mp4" />
