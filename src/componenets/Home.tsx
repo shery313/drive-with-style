@@ -4,7 +4,7 @@ import { Phone, Star, Car, Calendar, Smile, Shield, MapPin, Clock, Fuel } from "
 
 const Home = () => {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white">
+    <main className="min-h-screen bg-gradient-to-b p-10 from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
         <div className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 max-w-7xl mx-auto">

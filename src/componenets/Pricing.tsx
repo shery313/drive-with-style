@@ -59,14 +59,14 @@ const plans = [
 const Pricing = () => {
   return (
     <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="text-center mb-12 md:mb-16"
         >
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl p-3 font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
             Our Pricing Plans
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
