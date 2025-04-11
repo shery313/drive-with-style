@@ -21,7 +21,7 @@ const Navbar = () => {
         <div className="flex h-16 items-center justify-between md:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 rounded-md">
+            <Link to="/" className="flex items-center  rounded-md">
               <img 
                 src="/logo.png" 
                 className="h-12 w-auto md:h-14" 
