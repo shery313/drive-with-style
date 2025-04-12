@@ -16,7 +16,7 @@ const Home = () => {
             transition={{ duration: 0.7 }}
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-              Premium Car Rentals in <span className="whitespace-nowrap">Your City</span>
+              Premium Car Rentals in <span className="whitespace-nowrap">Islamabad</span>
             </h1>
             <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
               Experience luxury and convenience with our premium fleet of vehicles and professional chauffeurs. Available 24/7 for business, weddings, and special occasions.
