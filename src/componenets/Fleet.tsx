@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 type Car = {
   id: number;
   name: string;
-  type: "SUV" | "Sedan" | "Luxury" | "Economy";
+  type: "Hatchback" | "Sedan" | "SUV" | "Luxury";
   image: string;
   description: string;
   pricePerDay: string;
@@ -19,69 +19,200 @@ type Car = {
 };
 
 const cars: Car[] = [
+  // Hatchbacks
   {
     id: 1,
-    name: "Mercedes-Benz S-Class",
-    type: "Luxury",
-    image: "/car1.jpg",
-    description: "Premium class luxury with executive seating and cutting-edge technology for VIP experiences.",
-    pricePerDay: "Rs. 25,000/day",
+    name: "Suzuki Alto VXL",
+    type: "Hatchback",
+    image: "/altovxl.jpg",
+    description: "Compact automatic hatchback perfect for city driving with great fuel efficiency.",
+    pricePerDay: "Rs. 4,500/day",
     features: {
       seats: 4,
-      fuelType: "Premium",
+      fuelType: "Petrol",
       transmission: "Automatic",
-      rating: 4.9
+      rating: 4.2
     }
   },
   {
     id: 2,
-    name: "Toyota Land Cruiser",
-    type: "SUV",
-    image: "/car2.jpg",
-    description: "A rugged yet refined SUV capable of handling any terrain with premium comfort.",
-    pricePerDay: "Rs. 18,500/day",
+    name: "Suzuki Alto VXR",
+    type: "Hatchback",
+    image: "/altovxr.jpg",
+    description: "Economical manual transmission hatchback with excellent mileage.",
+    pricePerDay: "Rs. 4,200/day",
     features: {
-      seats: 7,
-      fuelType: "Diesel",
+      seats: 4,
+      fuelType: "Petrol",
+      transmission: "Manual",
+      rating: 4.1
+    }
+  },
+  {
+    id: 3,
+    name: "Kia Picanto",
+    type: "Hatchback",
+    image: "/kiapicanto.jpg",
+    description: "Stylish automatic hatchback with modern features and comfortable ride.",
+    pricePerDay: "Rs. 4,800/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Automatic",
+      rating: 4.3
+    }
+  },
+  {
+    id: 4,
+    name: "Nissan DayZ",
+    type: "Hatchback",
+    image: "/nissandayz.jpg",
+    description: "Compact automatic with surprising interior space and great maneuverability.",
+    pricePerDay: "Rs. 4,800/day",
+    features: {
+      seats: 4,
+      fuelType: "Petrol",
+      transmission: "Automatic",
+      rating: 4.4
+    }
+  },
+  {
+    id: 5,
+    name: "Suzuki Cultus VXL",
+    type: "Hatchback",
+    image: "/cultusvxl.jpg",
+    description: "Popular automatic hatchback with smooth ride and good features.",
+    pricePerDay: "Rs. 4,800/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Automatic",
+      rating: 4.5
+    }
+  },
+  {
+    id: 6,
+    name: "Suzuki Cultus VXR",
+    type: "Hatchback",
+    image: "/caltusvxr.jpg",
+    description: "Manual transmission version of the popular Cultus model.",
+    pricePerDay: "Rs. 4,500/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Manual",
+      rating: 4.3
+    }
+  },
+
+  // Sedans
+  {
+    id: 7,
+    name: "Hyundai Elantra",
+    type: "Sedan",
+    image: "/Hyndaielantra.jpg",
+    description: "Elegant sedan with premium features and comfortable ride.",
+    pricePerDay: "Rs. 12,000/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
       transmission: "Automatic",
       rating: 4.7
     }
   },
   {
-    id: 3,
-    name: "Honda Civic 2024",
+    id: 8,
+    name: "Honda Civic",
     type: "Sedan",
-    image: "/car3.jpg",
-    description: "Stylish and efficient sedan perfect for business meetings or weekend getaways.",
-    pricePerDay: "Rs. 9,500/day",
+    image: "/hondacivic.jpg",
+    description: "Iconic sedan with sporty design and reliable performance.",
+    pricePerDay: "Rs. 10,000/day",
     features: {
       seats: 5,
       fuelType: "Petrol",
-      transmission: "CVT",
+      transmission: "Automatic",
+      rating: 4.8
+    }
+  },
+  {
+    id: 9,
+    name: "Toyota Yaris 1.5",
+    type: "Sedan",
+    image: "/toytayaris1.5.jpg",
+    description: "Compact sedan with Toyota reliability and good fuel economy.",
+    pricePerDay: "Rs. 7,000/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Automatic",
       rating: 4.5
     }
   },
   {
-    id: 4,
-    name: "Suzuki Alto",
-    type: "Economy",
-    image: "/car4.jpg",
-    description: "Compact and fuel-efficient for city commuting and daily errands.",
-    pricePerDay: "Rs. 4,500/day",
+    id: 10,
+    name: "Toyota Yaris 1.3",
+    type: "Sedan",
+    image: "/hondayaris1.3.jpg",
+    description: "Economical version of the popular Yaris sedan.",
+    pricePerDay: "Rs. 6,000/day",
     features: {
-      seats: 4,
+      seats: 5,
       fuelType: "Petrol",
-      transmission: "Manual",
-      rating: 4.2
+      transmission: "Automatic",
+      rating: 4.4
     }
   },
   {
-    id: 5,
-    name: "KIA Sportage",
+    id: 11,
+    name: "Honda City 1.2",
+    type: "Sedan",
+    image: "/hondacity1.2.jpg",
+    description: "Entry-level version of the reliable Honda City sedan.",
+    pricePerDay: "Rs. 6,000/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Automatic",
+      rating: 4.3
+    }
+  },
+  {
+    id: 12,
+    name: "Honda City 1.5",
+    type: "Sedan",
+    image: "/hondacity1.5.jpg",
+    description: "More powerful version of the Honda City with additional features.",
+    pricePerDay: "Rs. 7,000/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Automatic",
+      rating: 4.6
+    }
+  },
+
+  // SUVs
+  {
+    id: 13,
+    name: "Haval H6",
     type: "SUV",
-    image: "/car5.jpg",
-    description: "Modern SUV with advanced safety features and spacious interior.",
-    pricePerDay: "Rs. 11,500/day",
+    image: "/Havalh6.jpg",
+    description: "Premium SUV with spacious interior and advanced features.",
+    pricePerDay: "Rs. 20,000/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Automatic",
+      rating: 4.7
+    }
+  },
+  {
+    id: 14,
+    name: "Hyundai Tucson",
+    type: "SUV",
+    image: "/hyndaitucson.jpg",
+    description: "Popular mid-size SUV with comfortable ride and good features.",
+    pricePerDay: "Rs. 15,000/day",
     features: {
       seats: 5,
       fuelType: "Petrol",
@@ -90,22 +221,52 @@ const cars: Car[] = [
     }
   },
   {
-    id: 6,
-    name: "BMW 7 Series",
-    type: "Luxury",
-    image: "/car6.jpg",
-    description: "The epitome of luxury with handcrafted details and powerful performance.",
-    pricePerDay: "Rs. 28,000/day",
+    id: 15,
+    name: "Kia Sportage Alpha",
+    type: "SUV",
+    image: "/kiasportage.jpg",
+    description: "Well-equipped SUV with premium interior and smooth performance.",
+    pricePerDay: "Rs. 15,000/day",
     features: {
-      seats: 4,
-      fuelType: "Premium",
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Automatic",
+      rating: 4.7
+    }
+  },
+  {
+    id: 16,
+    name: "MG HS",
+    type: "SUV",
+    image: "/mghs.jpg",
+    description: "Feature-packed SUV with modern design and technology.",
+    pricePerDay: "Rs. 13,000/day",
+    features: {
+      seats: 5,
+      fuelType: "Petrol",
+      transmission: "Automatic",
+      rating: 4.5
+    }
+  },
+
+  // Luxury
+  {
+    id: 17,
+    name: "Toyota Land Cruiser V8",
+    type: "Luxury",
+    image: "/Toyotalandcruiser.jpg",
+    description: "Ultimate luxury SUV with powerful performance and premium comfort.",
+    pricePerDay: "Rs. 26,000/day",
+    features: {
+      seats: 7,
+      fuelType: "Petrol",
       transmission: "Automatic",
       rating: 4.9
     }
-  },
+  }
 ];
 
-const categories = ["All", "SUV", "Sedan", "Luxury", "Economy"] as const;
+const categories = ["All", "Hatchback", "Sedan", "SUV", "Luxury"] as const;
 type Category = (typeof categories)[number];
 
 const Fleet = () => {
@@ -138,7 +299,7 @@ const Fleet = () => {
             transition={{ delay: 0.1 }}
             className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
           >
-            Choose from our diverse collection of luxury, executive, and economy vehicles for every occasion
+            Choose from our diverse collection of vehicles for every need and budget
           </motion.p>
         </header>
 
@@ -258,17 +419,19 @@ const Fleet = () => {
                               <li className="flex items-center gap-2">
                                 <span className="text-blue-500">•</span> Navigation system
                               </li>
-                              <li className="flex items-center gap-2">
-                                <span className="text-blue-500">•</span> Leather seats
-                              </li>
+                              {car.type === "Luxury" || car.type === "SUV" ? (
+                                <li className="flex items-center gap-2">
+                                  <span className="text-blue-500">•</span> Leather seats
+                                </li>
+                              ) : null}
                               <li className="flex items-center gap-2">
                                 <span className="text-blue-500">•</span> 24/7 roadside assistance
                               </li>
                             </ul>
-                            <Link to="/book" className="w-full">
-                            <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition">
-                              Book This Vehicle
-                            </button>
+                            <Link to={`/book?car=${encodeURIComponent(car.name)}`} className="w-full">
+                              <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition">
+                                Book This Vehicle
+                              </button>
                             </Link>
                           </motion.div>
                         )}
