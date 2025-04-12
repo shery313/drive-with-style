@@ -74,7 +74,7 @@ const Home = () => {
               <source src="/df.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
-{/* 
+            {/* 
             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-blue-500 rounded-full opacity-20"></div>
             <div className="absolute -top-6 -left-6 w-40 h-40 bg-purple-500 rounded-full opacity-20"></div> */}
           </motion.div>
@@ -157,82 +157,164 @@ const Home = () => {
       </section>
 
       {/* Fleet Preview Section */}
-      <section className="py-16 bg-gray-50 dark:bg-gray-800 ">
-        <div className="max-w-7xl mx-auto px-6 md:px-20">
-          <header className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl  font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Our Premium Fleet</h2>
-            <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
-              Explore our selection of luxury and executive vehicles
-            </p>
+      <section className="py-16 bg-gray-50 dark:bg-gray-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <header className="text-center mb-12">
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-3xl sm:text-4xl font-extrabold mb-4 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
+            >
+              Our Premium Fleet
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.1 }}
+              className="max-w-2xl mx-auto text-lg text-gray-600 dark:text-gray-300"
+            >
+              Explore our selection of vehicles for every need and budget
+            </motion.p>
           </header>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 id: 1,
-                model: "Mercedes-Benz S-Class",
-                desc: "The ultimate in luxury sedans with premium comfort and technology.",
-                features: ["Chauffeur Included", "LED Ambient Lighting", "Massage Seats"]
+                model: "Toyota Land Cruiser V8",
+                type: "Luxury",
+                price: "Rs. 26,000/day",
+                desc: "Ultimate luxury SUV with powerful performance and premium comfort.",
+                features: ["7 Seats", "Petrol", "Automatic"],
+                image: "/Toyotalandcruiser.jpg"
               },
               {
                 id: 2,
-                model: "BMW 7 Series",
-                desc: "Executive luxury with dynamic performance and elegant styling.",
-                features: ["Panoramic Roof", "Heated Seats", "Premium Sound"]
+                model: "Haval H6",
+                type: "SUV",
+                price: "Rs. 20,000/day",
+                desc: "Premium SUV with spacious interior and advanced features.",
+                features: ["5 Seats", "Petrol", "Automatic"],
+                image: "/Havalh6.jpg"
               },
               {
                 id: 3,
-                model: "Range Rover Autobiography",
-                desc: "Sophisticated SUV with commanding presence and luxury interior.",
-                features: ["All-Wheel Drive", "Climate Control", "Privacy Shades"]
+                model: "Hyundai Elantra",
+                type: "Sedan",
+                price: "Rs. 12,000/day",
+                desc: "Elegant sedan with premium features and comfortable ride.",
+                features: ["5 Seats", "Petrol", "Automatic"],
+                image: "/Hyndaielantra.jpg"
               },
+              {
+                id: 4,
+                model: "Honda Civic",
+                type: "Sedan",
+                price: "Rs. 10,000/day",
+                desc: "Iconic sedan with sporty design and reliable performance.",
+                features: ["5 Seats", "Petrol", "Automatic"],
+                image: "/hondacivic.jpg"
+              },
+              {
+                id: 5,
+                model: "Kia Picanto",
+                type: "Hatchback",
+                price: "Rs. 4,800/day",
+                desc: "Stylish automatic hatchback with modern features.",
+                features: ["5 Seats", "Petrol", "Automatic"],
+                image: "/kiapicanto.jpg"
+              },
+              {
+                id: 6,
+                model: "Suzuki Alto VXL",
+                type: "Hatchback",
+                price: "Rs. 4,500/day",
+                desc: "Compact automatic perfect for city driving with great fuel efficiency.",
+                features: ["4 Seats", "Petrol", "Automatic"],
+                image: "/altovxl.jpg"
+              }
             ].map((vehicle) => (
               <motion.article
                 key={vehicle.id}
                 whileHover={{ y: -5 }}
                 className="bg-white dark:bg-gray-900 rounded-xl shadow-lg overflow-hidden"
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
               >
-                <img
-                  src={`/car${vehicle.id}.jpg`}
-                  alt={`${vehicle.model} for rent`}
-                  className="w-full h-60 object-cover"
-                  width={400}
-                  height={300}
-                  loading="lazy"
-                />
+                <div className="relative">
+                  <img
+                    src={vehicle.image}
+                    alt={`${vehicle.model} for rent`}
+                    className="w-full h-60 object-cover"
+                    width={400}
+                    height={300}
+                    loading="lazy"
+                  />
+                  <span className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                    {vehicle.type}
+                  </span>
+                </div>
                 <div className="p-6">
-                  <h3 className="text-xl font-semibold mb-2">{vehicle.model}</h3>
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold">{vehicle.model}</h3>
+                    <p className="text-lg font-semibold text-blue-600 dark:text-blue-400">
+                      {vehicle.price}
+                    </p>
+                  </div>
                   <p className="text-gray-600 dark:text-gray-400 mb-4">{vehicle.desc}</p>
 
-                  <ul className="space-y-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-6">
                     {vehicle.features.map((feature, i) => (
-                      <li key={i} className="flex items-center gap-2 text-sm">
-                        <span className="text-blue-500">✓</span> {feature}
-                      </li>
+                      <span key={i} className="bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-300 text-xs px-3 py-1 rounded-full">
+                        {feature}
+                      </span>
                     ))}
-                  </ul>
+                  </div>
 
                   <Link
                     to={`/fleet#car-${vehicle.id}`}
-                    className="inline-block text-blue-600 dark:text-blue-400 font-medium hover:underline"
+                    className="inline-flex items-center text-blue-600 dark:text-blue-400 font-medium hover:underline group"
                     aria-label={`View details for ${vehicle.model}`}
                   >
-                    View Details →
+                    View Details
+                    <svg
+                      className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
                   </Link>
                 </div>
               </motion.article>
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <motion.div
+            className="text-center mt-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
             <Link
               to="/fleet"
-              className="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 shadow-lg transition focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold shadow-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               aria-label="View all vehicles in our fleet"
             >
               View Complete Fleet
+              <svg
+                className="w-4 h-4 ml-2"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+              </svg>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -458,8 +540,8 @@ const Home = () => {
       </section>
 
       {/* Trust Badges/Logos Section */}
-      <TrustedBy/>
-      
+      <TrustedBy />
+
     </main>
   );
 };
