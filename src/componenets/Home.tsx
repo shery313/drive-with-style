@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Phone, Star, Car, Calendar, Smile, Shield, MapPin, Clock, Fuel } from "lucide-react";
+import TrustedBy from "./TrustedBy";
 
 const Home = () => {
   return (
@@ -457,24 +458,8 @@ const Home = () => {
       </section>
 
       {/* Trust Badges/Logos Section */}
-      <section className="py-12 bg-gray-50 dark:bg-gray-800 ">
-        <div className="max-w-7xl mx-auto px-6 md:px-20">
-          <h3 className="text-center text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-8">
-            Trusted By
-          </h3>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 items-center">
-            {["https://osomehygiene.com/cdn/shop/files/osome_logo_brand_page-0001-1-21-25.jpg?v=1737454351", "https://d3fyizz0b46qgr.cloudfront.net/global/x_new/logo.svg","https://bejaanhygiene.com/wp-content/uploads/2024/05/Bejaan-Logo-min.png", "/infinix.jpg", "/itel.jpg"].map((company, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ scale: 1.05 }}
-                className="text-gray-400 dark:text-gray-500 font-bold text-xl"
-              >
-                <img src={company} alt="" className="h-20 w-20" />
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TrustedBy/>
+      
     </main>
   );
 };
