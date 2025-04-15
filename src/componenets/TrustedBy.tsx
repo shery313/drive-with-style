@@ -97,11 +97,11 @@ const TrustedBy = () => {
                 whileHover={{ scale: 1.05 }}
                 className="px-2 focus:outline-none"
               >
-                <div className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm hover:shadow-md transition-all h-24 flex items-center justify-center mx-auto">
+                <div className="bg-white dark:bg-gray-700 p-4 rounded-lg shadow-sm hover:shadow-md transition-all h-24  flex items-center justify-center mx-auto">
                   <img 
                     src={company.logo} 
                     alt={company.name} 
-                    className="max-h-16 max-w-32 object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
+                    className="max-h-12 max-w-28  object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
                     loading="lazy"
                   />
                 </div>
