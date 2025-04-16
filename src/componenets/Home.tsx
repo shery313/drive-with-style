@@ -5,7 +5,7 @@ import TrustedBy from "./TrustedBy";
 
 const Home = () => {
   return (
-    <main className=" bg-gradient-to-b pr-6  from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white">
+    <main className=" ">
       {/* Hero Section */}
       <section className="relative overflow-hidden ">
         <div className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 max-w-7xl mx-auto">
@@ -522,18 +522,18 @@ const Home = () => {
             className="flex flex-wrap justify-center gap-4"
           >
             <Link
-              to="/contact"
+              to="/book"
               className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 shadow-lg transition flex items-center gap-2 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
               aria-label="Contact us for booking"
             >
               <Phone size={20} /> Book Now
             </Link>
             <a
-              href="tel:+1234567890"
+              href="tel:+92 312 5430959"
               className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 shadow-lg transition flex items-center gap-2 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-blue-600"
               aria-label="Call us directly"
             >
-              <Phone size={20} /> Call: (123) 456-7890
+              <Phone size={20} /> Call: +92 312 5430959
             </a>
           </motion.div>
         </div>
