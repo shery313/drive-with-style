@@ -5,7 +5,7 @@ import TrustedBy from "./TrustedBy";
 
 const Home = () => {
   return (
-    <main className=" ">
+    <main className=" min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 text-gray-800 dark:text-white px-6 sm:px-6 lg:px-8 py-12 md:py-20">
       {/* Hero Section */}
       <section className="relative overflow-hidden ">
         <div className="flex flex-col md:flex-row items-center justify-between px-6 md:px-20 py-20 gap-12 max-w-7xl mx-auto">
