@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Calendar, Clock, User, MapPin, CreditCard, Check } from "lucide-react";
+import { Calendar, Clock, User, MapPin, CreditCard, Check, Upload, Banknote, ArrowLeft } from "lucide-react";
 import { motion } from "framer-motion";
 
 const BookingPage = () => {
@@ -15,37 +15,72 @@ const BookingPage = () => {
     email: "",
     phone: "",
     specialRequests: "",
-    paymentMethod: "credit-card",
-    cardNumber: "",
-    cardExpiry: "",
-    cardCvc: "",
+    paymentMethod: "bank-transfer",
+    transactionId: "",
+    paymentScreenshot: null as File | null,
   });
 
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const carTypes = [
-    { id: "sedan", name: "Luxury Sedan (Mercedes E-Class)", price: "$120/day" },
-    { id: "suv", name: "Premium SUV (Range Rover)", price: "$180/day" },
-    { id: "s-class", name: "Executive (Mercedes S-Class)", price: "$250/day" },
-    { id: "limo", name: "Limousine", price: "$350/day" },
+    { id: "hatchback", name: "Hatchback (Suzuki Alto)", price: "Rs. 4,500/day" },
+    { id: "sedan", name: "Sedan (Toyota Yaris)", price: "Rs. 7,000/day" },
+    { id: "suv", name: "SUV (Hyundai Tucson)", price: "Rs. 15,000/day" },
+    { id: "luxury", name: "Luxury (Toyota Land Cruiser)", price: "Rs. 26,000/day" },
   ];
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData(prev => ({ ...prev, paymentScreenshot: e.target.files![0] }));
+    }
   };
 
   const nextStep = () => setStep(prev => prev + 1);
   const prevStep = () => setStep(prev => prev - 1);
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you would handle form submission here
     console.log("Form submitted:", formData);
     nextStep();
+  };
+
+  const triggerFileInput = () => {
+    fileInputRef.current?.click();
+  };
+
+  const removeScreenshot = () => {
+    setFormData(prev => ({ ...prev, paymentScreenshot: null }));
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
+        {/* Back button for steps 1-3 */}
+        {step < 4 && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="mb-6"
+          >
+            <Link 
+              to={step === 1 ? "/fleet" : "#"} 
+              onClick={step > 1 ? prevStep : undefined}
+              className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              <ArrowLeft size={16} />
+              {step === 1 ? "Back to Fleet" : "Back"}
+            </Link>
+          </motion.div>
+        )}
+
         {/* Booking Header */}
         <header className="text-center mb-12">
           <motion.h1 
@@ -53,42 +88,43 @@ const BookingPage = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4"
           >
-            Book Your Premium Ride
+            Book Your Vehicle
           </motion.h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            Complete the form below to reserve your luxury vehicle
+            Complete the form below to reserve your vehicle
           </p>
         </header>
 
         {/* Progress Steps */}
-        <div className="mb-12">
-          <div className="flex justify-between relative">
-            {/* Progress line */}
-            <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700 -z-10"></div>
-            <div 
-              className="absolute top-1/2 left-0 h-1 bg-blue-600 dark:bg-blue-500 -z-10 transition-all duration-300"
-              style={{ width: `${(step - 1) * 33.33}%` }}
-            ></div>
+        {step < 4 && (
+          <div className="mb-12">
+            <div className="flex justify-between relative">
+              <div className="absolute top-1/2 left-0 right-0 h-1 bg-gray-200 dark:bg-gray-700 -z-10"></div>
+              <div 
+                className="absolute top-1/2 left-0 h-1 bg-blue-600 dark:bg-blue-500 -z-10 transition-all duration-300"
+                style={{ width: `${(step - 1) * 50}%` }}
+              ></div>
 
-            {[1, 2, 3].map((stepNumber) => (
-              <div key={stepNumber} className="flex flex-col items-center">
-                <button
-                  onClick={() => stepNumber < step && setStep(stepNumber)}
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium ${stepNumber <= step ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-400 dark:bg-gray-600'} transition-colors`}
-                  disabled={stepNumber > step}
-                  aria-label={`Go to step ${stepNumber}`}
-                >
-                  {stepNumber < step ? <Check size={18} /> : stepNumber}
-                </button>
-                <span className={`mt-2 text-sm font-medium ${stepNumber <= step ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
-                  {stepNumber === 1 && 'Trip Details'}
-                  {stepNumber === 2 && 'Your Information'}
-                  {stepNumber === 3 && 'Payment'}
-                </span>
-              </div>
-            ))}
+              {[1, 2, 3].map((stepNumber) => (
+                <div key={stepNumber} className="flex flex-col items-center">
+                  <button
+                    onClick={() => stepNumber < step && setStep(stepNumber)}
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-white font-medium ${stepNumber <= step ? 'bg-blue-600 dark:bg-blue-500' : 'bg-gray-400 dark:bg-gray-600'} transition-colors`}
+                    disabled={stepNumber > step}
+                    aria-label={`Go to step ${stepNumber}`}
+                  >
+                    {stepNumber < step ? <Check size={18} /> : stepNumber}
+                  </button>
+                  <span className={`mt-2 text-sm font-medium ${stepNumber <= step ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'}`}>
+                    {stepNumber === 1 && 'Trip Details'}
+                    {stepNumber === 2 && 'Your Info'}
+                    {stepNumber === 3 && 'Payment'}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Booking Form */}
         <motion.div 
@@ -105,7 +141,7 @@ const BookingPage = () => {
               <div className="p-6 sm:p-8">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
                   <MapPin className="text-blue-600 dark:text-blue-400" size={24} />
-                  Booking Details
+                  Trip Details
                 </h2>
                 
                 <div className="space-y-6">
@@ -122,7 +158,7 @@ const BookingPage = () => {
                           value={formData.pickupLocation}
                           onChange={handleChange}
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                          placeholder="Enter address or airport"
+                          placeholder="Enter address or location"
                           required
                         />
                         <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={18} />
@@ -141,7 +177,7 @@ const BookingPage = () => {
                           value={formData.dropoffLocation}
                           onChange={handleChange}
                           className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                          placeholder="Enter address or airport"
+                          placeholder="Same as pickup or different"
                           required
                         />
                         <MapPin className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={18} />
@@ -174,15 +210,26 @@ const BookingPage = () => {
                         Pickup Time
                       </label>
                       <div className="relative">
-                        <input
-                          type="time"
+                        <select
                           id="pickupTime"
                           name="pickupTime"
                           value={formData.pickupTime}
                           onChange={handleChange}
-                          className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
+                          className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white appearance-none"
                           required
-                        />
+                        >
+                          <option value="">Select time</option>
+                          {Array.from({ length: 24 }, (_, i) => {
+                            const hour = i % 12 || 12;
+                            const ampm = i < 12 ? 'AM' : 'PM';
+                            const time = `${hour}:00 ${ampm}`;
+                            return (
+                              <option key={time} value={time}>
+                                {time}
+                              </option>
+                            );
+                          })}
+                        </select>
                         <Clock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500" size={18} />
                       </div>
                     </div>
@@ -285,7 +332,7 @@ const BookingPage = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                      placeholder="+1 (555) 123-4567"
+                      placeholder="+92 312 3456789"
                       required
                     />
                   </div>
@@ -341,21 +388,21 @@ const BookingPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <input
-                          id="credit-card"
+                          id="bank-transfer"
                           name="paymentMethod"
                           type="radio"
-                          value="credit-card"
-                          checked={formData.paymentMethod === "credit-card"}
+                          value="bank-transfer"
+                          checked={formData.paymentMethod === "bank-transfer"}
                           onChange={handleChange}
                           className="peer hidden"
                         />
                         <label
-                          htmlFor="credit-card"
+                          htmlFor="bank-transfer"
                           className="block p-4 border border-gray-300 dark:border-gray-600 rounded-lg cursor-pointer peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500 dark:peer-checked:border-blue-400 dark:peer-checked:ring-blue-400"
                         >
                           <div className="flex items-center gap-3">
-                            <CreditCard className="text-gray-500 dark:text-gray-400" size={20} />
-                            <span className="font-medium">Credit Card</span>
+                            <Banknote className="text-gray-500 dark:text-gray-400" size={20} />
+                            <span className="font-medium">Bank Transfer</span>
                           </div>
                         </label>
                       </div>
@@ -385,56 +432,87 @@ const BookingPage = () => {
                     </div>
                   </div>
 
-                  {formData.paymentMethod === "credit-card" && (
+                  {formData.paymentMethod === "bank-transfer" && (
                     <>
+                      <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+                        <h3 className="font-medium text-blue-800 dark:text-blue-200 mb-2">Bank Account Details</h3>
+                        <div className="space-y-2 text-sm text-blue-700 dark:text-blue-300">
+                          <p><strong>Bank Name:</strong> Habib Bank Limited (HBL)</p>
+                          <p><strong>Account Title:</strong> Your Company Name</p>
+                          <p><strong>Account Number:</strong> 1234567890123</p>
+                          <p><strong>IBAN:</strong> PK36HABB0012345678901234</p>
+                          <p className="mt-2 text-xs">Please include your booking reference in the transaction description.</p>
+                        </div>
+                      </div>
+
                       <div>
-                        <label htmlFor="cardNumber" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                          Card Number
+                        <label htmlFor="transactionId" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          Transaction ID/Reference
                         </label>
                         <input
                           type="text"
-                          id="cardNumber"
-                          name="cardNumber"
-                          value={formData.cardNumber}
+                          id="transactionId"
+                          name="transactionId"
+                          value={formData.transactionId}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                          placeholder="1234 5678 9012 3456"
-                          required={formData.paymentMethod === "credit-card"}
+                          placeholder="Enter transaction reference number"
+                          required={formData.paymentMethod === "bank-transfer"}
                         />
                       </div>
 
-                      <div className="grid grid-cols-2 gap-6">
-                        <div>
-                          <label htmlFor="cardExpiry" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            Expiry Date
-                          </label>
-                          <input
-                            type="text"
-                            id="cardExpiry"
-                            name="cardExpiry"
-                            value={formData.cardExpiry}
-                            onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                            placeholder="MM/YY"
-                            required={formData.paymentMethod === "credit-card"}
-                          />
-                        </div>
-
-                        <div>
-                          <label htmlFor="cardCvc" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                            CVC
-                          </label>
-                          <input
-                            type="text"
-                            id="cardCvc"
-                            name="cardCvc"
-                            value={formData.cardCvc}
-                            onChange={handleChange}
-                            className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-                            placeholder="123"
-                            required={formData.paymentMethod === "credit-card"}
-                          />
-                        </div>
+                      <div>
+                        <label htmlFor="paymentScreenshot" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                          Payment Proof (Screenshot)
+                        </label>
+                        <input
+                          type="file"
+                          id="paymentScreenshot"
+                          name="paymentScreenshot"
+                          ref={fileInputRef}
+                          onChange={handleFileChange}
+                          className="hidden"
+                          accept="image/*,.pdf"
+                          required={formData.paymentMethod === "bank-transfer"}
+                        />
+                        {formData.paymentScreenshot ? (
+                          <div className="border border-gray-300 dark:border-gray-600 rounded-lg p-4">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-3">
+                                <div className="bg-gray-100 dark:bg-gray-700 p-2 rounded-lg">
+                                  <Upload className="text-gray-500 dark:text-gray-400" size={20} />
+                                </div>
+                                <div>
+                                  <p className="font-medium text-gray-700 dark:text-gray-300">
+                                    {formData.paymentScreenshot.name}
+                                  </p>
+                                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    {(formData.paymentScreenshot.size / 1024).toFixed(2)} KB
+                                  </p>
+                                </div>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={removeScreenshot}
+                                className="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-500"
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={triggerFileInput}
+                            className="w-full p-4 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg hover:border-blue-500 dark:hover:border-blue-400 transition-colors"
+                          >
+                            <div className="flex flex-col items-center justify-center gap-2 text-gray-500 dark:text-gray-400">
+                              <Upload size={24} />
+                              <span className="font-medium">Click to upload screenshot</span>
+                              <span className="text-xs">JPG, PNG or PDF (Max 5MB)</span>
+                            </div>
+                          </button>
+                        )}
                       </div>
                     </>
                   )}
@@ -449,9 +527,15 @@ const BookingPage = () => {
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span>Pickup:</span>
+                        <span>Pickup Date:</span>
                         <span className="font-medium">
-                          {formData.pickupDate ? `${formData.pickupDate} at ${formData.pickupTime}` : "Not specified"}
+                          {formData.pickupDate || "Not specified"}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Pickup Time:</span>
+                        <span className="font-medium">
+                          {formData.pickupTime || "Not specified"}
                         </span>
                       </div>
                       <div className="flex justify-between">
@@ -469,7 +553,12 @@ const BookingPage = () => {
                       <div className="border-t border-gray-200 dark:border-gray-600 my-2"></div>
                       <div className="flex justify-between font-bold text-gray-900 dark:text-white">
                         <span>Estimated Total:</span>
-                        <span>$250.00</span>
+                        <span>
+                          {formData.carType === "hatchback" ? "Rs. 4,500" :
+                           formData.carType === "sedan" ? "Rs. 7,000" :
+                           formData.carType === "suv" ? "Rs. 15,000" :
+                           formData.carType === "luxury" ? "Rs. 26,000" : "Select vehicle"}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -487,7 +576,7 @@ const BookingPage = () => {
                     type="submit"
                     className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
                   >
-                    Confirm Booking
+                    {formData.paymentMethod === "cash" ? "Confirm Booking" : "Submit Payment Proof"}
                   </button>
                 </div>
               </div>
@@ -500,14 +589,33 @@ const BookingPage = () => {
                   <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
-                  Booking Confirmed!
+                  {formData.paymentMethod === "cash" ? "Booking Confirmed!" : "Payment Received!"}
                 </h2>
                 <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-md mx-auto">
-                  Thank you for your booking. We've sent a confirmation to <span className="font-medium">{formData.email}</span>. Your chauffeur will contact you before pickup.
+                  {formData.paymentMethod === "cash" 
+                    ? "Your booking has been confirmed. Our representative will contact you shortly to finalize details."
+                    : "Thank you for your payment. We've received your transaction and will verify it shortly. You'll receive a confirmation email once processed."}
                 </p>
+                
+                {formData.paymentMethod === "bank-transfer" && (
+                  <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg max-w-md mx-auto text-left mb-6">
+                    <h3 className="font-medium text-gray-900 dark:text-white mb-2">Payment Details</h3>
+                    <div className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
+                      <div className="flex justify-between">
+                        <span>Transaction ID:</span>
+                        <span className="font-medium">{formData.transactionId || "Not provided"}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span>Payment Method:</span>
+                        <span className="font-medium">Bank Transfer</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
                 <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg max-w-md mx-auto text-left mb-8">
-                  <h3 className="font-medium text-gray-900 dark:text-white mb-3">Booking Reference: #DW2023-4567</h3>
-                  <div className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
+                  <h3 className="font-medium text-gray-900 dark:text-white mb-2">Booking Reference: #PK{Math.floor(Math.random() * 9000) + 1000}</h3>
+                  <div className="space-y-1 text-sm text-gray-600 dark:text-gray-300">
                     <div className="flex justify-between">
                       <span>Vehicle:</span>
                       <span className="font-medium">
@@ -515,9 +623,21 @@ const BookingPage = () => {
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span>Pickup:</span>
+                      <span>Pickup Date:</span>
                       <span className="font-medium">
-                        {formData.pickupDate ? `${formData.pickupDate} at ${formData.pickupTime}` : "Not specified"}
+                        {formData.pickupDate || "Not specified"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Pickup Time:</span>
+                      <span className="font-medium">
+                        {formData.pickupTime || "Not specified"}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Customer:</span>
+                      <span className="font-medium">
+                        {formData.fullName || "Not provided"}
                       </span>
                     </div>
                   </div>
@@ -544,7 +664,7 @@ const BookingPage = () => {
         {/* Support Info */}
         {step !== 4 && (
           <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            <p>Need help? Call our support team at <a href="tel:+923125430959" className="text-blue-600 dark:text-blue-400 hover:underline">923125430959</a></p>
+            <p>Need help? Call our support team at <a href="tel:+923125430959" className="text-blue-600 dark:text-blue-400 hover:underline">+92 312 5430959</a></p>
           </div>
         )}
       </div>
