@@ -10,6 +10,7 @@ import Contact from './componenets/Conctact'
 import ScrollToTop from './componenets/ScrollToTop'
 import WhatsAppButton from './componenets/WhatsappButton.'
 import BookingPage from './componenets/BookingPage'
+import FleetDetail from './componenets/FleetDetail'
 
 
 
@@ -25,10 +26,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Home  />} />
           <Route path="/fleet" element={<Fleet  />} />
+          <Route path="/fleet/:slug" element={<FleetDetail  />} />
           <Route path="/pricing" element={<Pricing  />} />
           <Route path="/about" element={<About  />} />
           <Route path="/contact" element={<Contact  />} />
           <Route path="/book" element={<BookingPage  />} />
+          <Route path="/book/:slug" element={<BookingPage  />} />
         </Routes>
         <Footer />
       

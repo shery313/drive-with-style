@@ -1,270 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Car, Fuel, Users, Settings, Star, ChevronDown } from "lucide-react";
+import { Fuel, Users, Settings, Star, ChevronDown, Search, Filter, Car, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-type Car = {
+type CarType = {
   id: number;
   name: string;
-  type: "Hatchback" | "Sedan" | "SUV" | "Luxury";
+  vehicle_type: "Hatchback" | "Sedan" | "SUV" | "Luxury";
   image: string;
   description: string;
-  pricePerDay: string;
-  features: {
-    seats: number;
-    fuelType: string;
-    transmission: string;
-    rating: number;
-  };
+  price_per_day: string;
+  seats: number;
+  fuel_type: string;
+  transmission: string;
+  rating: number;
+  air_conditioning: boolean;
+  luggage_capacity: number;
+  insurance_coverage: boolean;
+  slug: string;
 };
-
-const cars: Car[] = [
-  // Hatchbacks
-  {
-    id: 1,
-    name: "Suzuki Alto VXL",
-    type: "Hatchback",
-    image: "/altovxl.jpg",
-    description: "Compact automatic hatchback perfect for city driving with great fuel efficiency.",
-    pricePerDay: "Rs. 4,500/day",
-    features: {
-      seats: 4,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.2
-    }
-  },
-  {
-    id: 2,
-    name: "Suzuki Alto VXR",
-    type: "Hatchback",
-    image: "/altovxr.jpg",
-    description: "Economical manual transmission hatchback with excellent mileage.",
-    pricePerDay: "Rs. 4,200/day",
-    features: {
-      seats: 4,
-      fuelType: "Petrol",
-      transmission: "Manual",
-      rating: 4.1
-    }
-  },
-  {
-    id: 3,
-    name: "Kia Picanto",
-    type: "Hatchback",
-    image: "/kiapicanto.jpg",
-    description: "Stylish automatic hatchback with modern features and comfortable ride.",
-    pricePerDay: "Rs. 4,800/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.3
-    }
-  },
-  {
-    id: 4,
-    name: "Nissan DayZ",
-    type: "Hatchback",
-    image: "/nissandayz.jpg",
-    description: "Compact automatic with surprising interior space and great maneuverability.",
-    pricePerDay: "Rs. 4,800/day",
-    features: {
-      seats: 4,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.4
-    }
-  },
-  {
-    id: 5,
-    name: "Suzuki Cultus VXL",
-    type: "Hatchback",
-    image: "/cultusvxl.jpg",
-    description: "Popular automatic hatchback with smooth ride and good features.",
-    pricePerDay: "Rs. 4,800/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.5
-    }
-  },
-  {
-    id: 6,
-    name: "Suzuki Cultus VXR",
-    type: "Hatchback",
-    image: "/caltusvxr.jpg",
-    description: "Manual transmission version of the popular Cultus model.",
-    pricePerDay: "Rs. 4,500/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Manual",
-      rating: 4.3
-    }
-  },
-
-  // Sedans
-  {
-    id: 7,
-    name: "Hyundai Elantra",
-    type: "Sedan",
-    image: "/Hyndaielantra.jpg",
-    description: "Elegant sedan with premium features and comfortable ride.",
-    pricePerDay: "Rs. 12,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.7
-    }
-  },
-  {
-    id: 8,
-    name: "Honda Civic",
-    type: "Sedan",
-    image: "/hondacivic.jpg",
-    description: "Iconic sedan with sporty design and reliable performance.",
-    pricePerDay: "Rs. 10,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.8
-    }
-  },
-  {
-    id: 9,
-    name: "Toyota Yaris 1.5",
-    type: "Sedan",
-    image: "/toytayaris1.5.jpg",
-    description: "Compact sedan with Toyota reliability and good fuel economy.",
-    pricePerDay: "Rs. 7,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.5
-    }
-  },
-  {
-    id: 10,
-    name: "Toyota Yaris 1.3",
-    type: "Sedan",
-    image: "/hondayaris1.3.jpg",
-    description: "Economical version of the popular Yaris sedan.",
-    pricePerDay: "Rs. 6,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.4
-    }
-  },
-  {
-    id: 11,
-    name: "Honda City 1.2",
-    type: "Sedan",
-    image: "/hondacity1.2.jpg",
-    description: "Entry-level version of the reliable Honda City sedan.",
-    pricePerDay: "Rs. 6,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.3
-    }
-  },
-  {
-    id: 12,
-    name: "Honda City 1.5",
-    type: "Sedan",
-    image: "/hondacity1.5.jpg",
-    description: "More powerful version of the Honda City with additional features.",
-    pricePerDay: "Rs. 7,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.6
-    }
-  },
-
-  // SUVs
-  {
-    id: 13,
-    name: "Haval H6",
-    type: "SUV",
-    image: "/Havalh6.jpg",
-    description: "Premium SUV with spacious interior and advanced features.",
-    pricePerDay: "Rs. 20,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.7
-    }
-  },
-  {
-    id: 14,
-    name: "Hyundai Tucson",
-    type: "SUV",
-    image: "/hyndaitucson.jpg",
-    description: "Popular mid-size SUV with comfortable ride and good features.",
-    pricePerDay: "Rs. 15,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.6
-    }
-  },
-  {
-    id: 15,
-    name: "Kia Sportage Alpha",
-    type: "SUV",
-    image: "/kiasportage.jpg",
-    description: "Well-equipped SUV with premium interior and smooth performance.",
-    pricePerDay: "Rs. 15,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.7
-    }
-  },
-  {
-    id: 16,
-    name: "MG HS",
-    type: "SUV",
-    image: "/mghs.jpg",
-    description: "Feature-packed SUV with modern design and technology.",
-    pricePerDay: "Rs. 13,000/day",
-    features: {
-      seats: 5,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.5
-    }
-  },
-
-  // Luxury
-  {
-    id: 17,
-    name: "Toyota Land Cruiser V8",
-    type: "Luxury",
-    image: "/Toyotalandcruiser.jpg",
-    description: "Ultimate luxury SUV with powerful performance and premium comfort.",
-    pricePerDay: "Rs. 26,000/day",
-    features: {
-      seats: 7,
-      fuelType: "Petrol",
-      transmission: "Automatic",
-      rating: 4.9
-    }
-  }
-];
 
 const categories = ["All", "Hatchback", "Sedan", "SUV", "Luxury"] as const;
 type Category = (typeof categories)[number];
@@ -272,191 +27,336 @@ type Category = (typeof categories)[number];
 const Fleet = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category>("All");
   const [expandedCarId, setExpandedCarId] = useState<number | null>(null);
+  const [cars, setCars] = useState<CarType[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/api/v1/fleet/");
+        setCars(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError("Failed to fetch vehicles. Please try again later.");
+        setLoading(false);
+        console.error("Error fetching cars:", err);
+      }
+    };
+
+    fetchCars();
+  }, []);
 
   const filteredCars = selectedCategory === "All" 
-    ? cars 
-    : cars.filter((car) => car.type === selectedCategory);
+    ? cars.filter(car => 
+        car.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        car.description.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : cars.filter((car) => 
+        car.vehicle_type === selectedCategory && (
+          car.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          car.description.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+      );
 
   const toggleExpand = (id: number) => {
     setExpandedCarId(expandedCarId === id ? null : id);
   };
 
-  return (
-    <section className="min-h-screen px-4 sm:px-6 lg:px-8 py-12 bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-white">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <header className="text-center mb-16">
-          <motion.h1 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
-          >
-            Our Premium Fleet
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto"
-          >
-            Choose from our diverse collection of vehicles for every need and budget
-          </motion.p>
-        </header>
+  if (loading) {
+    return (
+      <section className="min-h-screen bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">Loading Our Fleet</h1>
+            <p className="text-gray-600">Discovering premium vehicles for you...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
-        {/* Filter Buttons */}
-        <motion.div 
-          className="flex flex-wrap justify-center gap-3 mb-16"
+  if (error) {
+    return (
+      <section className="min-h-screen bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-red-50 border border-red-200 rounded-2xl p-8 max-w-md mx-auto">
+            <div className="text-red-500 text-6xl mb-4">⚠️</div>
+            <h1 className="text-2xl font-bold text-gray-900 mb-4">Unable to Load Fleet</h1>
+            <p className="text-gray-600 mb-6">{error}</p>
+            <button 
+              onClick={() => window.location.reload()}
+              className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="min-h-screen bg-gray-50">
+      {/* Header Section */}
+      <div className="bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6 border border-white/20">
+              <Sparkles className="w-4 h-4" />
+              <span className="text-sm font-medium">Premium Fleet</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+              Our <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">Premium</span> Fleet
+            </h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Choose from our diverse collection of premium vehicles for every need and budget
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      {/* Search and Filter Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-12"
+        >
+          <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
+            {/* Search Bar */}
+            <div className="flex-1 w-full lg:max-w-md">
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <input
+                  type="text"
+                  placeholder="Search vehicles by name or description..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Filter Buttons */}
+            <div className="flex flex-wrap gap-2">
+              <div className="flex items-center gap-2 text-sm text-gray-600 font-medium">
+                <Filter className="w-4 h-4" />
+                Filter:
+              </div>
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 ${
+                    selectedCategory === category
+                      ? "bg-blue-600 text-white shadow-lg shadow-blue-500/25"
+                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  }`}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Results Count */}
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          transition={{ delay: 0.3 }}
+          className="mb-8"
         >
-          {categories.map((category) => (
-            <button
-              key={category}
-              className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
-                selectedCategory === category
-                  ? "bg-blue-600 text-white shadow-md"
-                  : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
-              }`}
-              onClick={() => setSelectedCategory(category)}
-              aria-label={`Filter by ${category} vehicles`}
-            >
-              {category}
-            </button>
-          ))}
+          <p className="text-gray-600">
+            Showing <span className="font-semibold text-gray-900">{filteredCars.length}</span> vehicles
+            {selectedCategory !== "All" && (
+              <span> in <span className="font-semibold text-blue-600">{selectedCategory}</span></span>
+            )}
+            {searchQuery && (
+              <span> matching "<span className="font-semibold text-blue-600">{searchQuery}</span>"</span>
+            )}
+          </p>
         </motion.div>
 
         {/* Cars Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           <AnimatePresence>
             {filteredCars.length > 0 ? (
-              filteredCars.map((car) => (
+              filteredCars.map((car, index) => (
                 <motion.article
                   key={car.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
+                  className="group"
                 >
-                  <div className="relative">
-                    <img
-                      src={car.image}
-                      alt={`${car.name} for rent`}
-                      className="w-full h-60 object-cover"
-                      width={400}
-                      height={300}
-                      loading="lazy"
-                    />
-                    <span className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                      {car.type}
-                    </span>
-                  </div>
-
-                  <div className="p-6">
-                    <div className="flex justify-between items-start mb-3">
-                      <h3 className="text-xl font-bold">{car.name}</h3>
-                      <div className="flex items-center gap-1 text-amber-500">
-                        <Star size={16} fill="currentColor" />
-                        <span className="text-sm font-medium">{car.features.rating}</span>
+                  <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-xl transition-all duration-500 group-hover:scale-105">
+                    {/* Image Section */}
+                    <div className="relative overflow-hidden">
+                      <img
+                        src={car.image}
+                        alt={car.name}
+                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-700"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <span className={`px-3 py-1.5 rounded-full text-xs font-semibold ${
+                          car.vehicle_type === "Luxury" 
+                            ? "bg-purple-600 text-white" 
+                            : car.vehicle_type === "SUV"
+                            ? "bg-green-600 text-white"
+                            : car.vehicle_type === "Sedan"
+                            ? "bg-blue-600 text-white"
+                            : "bg-orange-600 text-white"
+                        }`}>
+                          {car.vehicle_type}
+                        </span>
                       </div>
-                    </div>
-
-                    <p className="text-gray-600 dark:text-gray-400 mb-4">{car.description}</p>
-
-                    <div className="grid grid-cols-3 gap-4 mb-6">
-                      <div className="flex flex-col items-center">
-                        <Users size={20} className="text-blue-600 dark:text-blue-400 mb-1" />
-                        <span className="text-xs text-gray-500 dark:text-gray-400">{car.features.seats} Seats</span>
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <Fuel size={20} className="text-blue-600 dark:text-blue-400 mb-1" />
-                        <span className="text-xs text-gray-500 dark:text-gray-400">{car.features.fuelType}</span>
-                      </div>
-                      <div className="flex flex-col items-center">
-                        <Settings size={20} className="text-blue-600 dark:text-blue-400 mb-1" />
-                        <span className="text-xs text-gray-500 dark:text-gray-400">{car.features.transmission}</span>
-                      </div>
-                    </div>
-
-                    <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
-                      <div className="flex justify-between items-center">
-                        <div>
-                          <p className="text-sm text-gray-500 dark:text-gray-400">Starting from</p>
-                          <p className="text-lg font-bold text-blue-600 dark:text-blue-400">{car.pricePerDay}</p>
+                      <div className="absolute top-4 right-4">
+                        <div className="flex items-center gap-1 bg-black/70 backdrop-blur-sm rounded-full px-2 py-1">
+                          <Star className="w-3 h-3 text-yellow-400" fill="currentColor" />
+                          <span className="text-xs font-medium text-white">{car.rating.toFixed(1)}</span>
                         </div>
-                        <button
-                          onClick={() => toggleExpand(car.id)}
-                          className="flex items-center gap-1 text-blue-600 dark:text-blue-400 text-sm font-medium hover:underline"
-                          aria-expanded={expandedCarId === car.id}
-                        >
-                          {expandedCarId === car.id ? 'Less details' : 'More details'}
-                          <ChevronDown 
-                            size={16} 
-                            className={`transition-transform ${expandedCarId === car.id ? 'rotate-180' : ''}`}
-                          />
-                        </button>
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                    </div>
+
+                    {/* Content Section */}
+                    <div className="p-6">
+                      <div className="mb-4">
+                        <h3 className="text-xl font-bold text-gray-900 mb-2">{car.name}</h3>
+                        <p className="text-gray-600 text-sm leading-relaxed">{car.description}</p>
                       </div>
 
-                      <AnimatePresence>
-                        {expandedCarId === car.id && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700"
+                      {/* Features Grid */}
+                      <div className="grid grid-cols-3 gap-4 mb-6">
+                        <div className="text-center">
+                          <div className="bg-blue-50 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-2">
+                            <Users className="w-6 h-6 text-blue-600" />
+                          </div>
+                          <span className="text-xs font-medium text-gray-700">{car.seats} Seats</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="bg-green-50 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-2">
+                            <Fuel className="w-6 h-6 text-green-600" />
+                          </div>
+                          <span className="text-xs font-medium text-gray-700">{car.fuel_type}</span>
+                        </div>
+                        <div className="text-center">
+                          <div className="bg-purple-50 w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-2">
+                            <Settings className="w-6 h-6 text-purple-600" />
+                          </div>
+                          <span className="text-xs font-medium text-gray-700">{car.transmission}</span>
+                        </div>
+                      </div>
+
+                      {/* Price and Actions */}
+                      <div className="border-t border-gray-100 pt-4">
+                        <div className="flex justify-between items-center mb-4">
+                          <div>
+                            <p className="text-sm text-gray-500">Starting from</p>
+                            <p className="text-2xl font-bold text-blue-600">Rs. {car.price_per_day}<span className="text-sm font-normal text-gray-500">/day</span></p>
+                          </div>
+                          <button
+                            onClick={() => toggleExpand(car.id)}
+                            className="flex items-center gap-2 text-blue-600 font-semibold hover:text-blue-700 transition-colors"
                           >
-                            <h4 className="font-semibold mb-2">Features:</h4>
-                            <ul className="space-y-2 text-sm text-gray-600 dark:text-gray-300">
-                              <li className="flex items-center gap-2">
-                                <span className="text-blue-500">•</span> Climate control
-                              </li>
-                              <li className="flex items-center gap-2">
-                                <span className="text-blue-500">•</span> Bluetooth connectivity
-                              </li>
-                              <li className="flex items-center gap-2">
-                                <span className="text-blue-500">•</span> Navigation system
-                              </li>
-                              {car.type === "Luxury" || car.type === "SUV" ? (
-                                <li className="flex items-center gap-2">
-                                  <span className="text-blue-500">•</span> Leather seats
-                                </li>
-                              ) : null}
-                              <li className="flex items-center gap-2">
-                                <span className="text-blue-500">•</span> 24/7 roadside assistance
-                              </li>
-                            </ul>
-                            <Link to={`/book?car=${encodeURIComponent(car.name)}`} className="w-full">
-                              <button className="mt-4 w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-lg font-medium transition">
-                                Book This Vehicle
-                              </button>
-                            </Link>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                            {expandedCarId === car.id ? 'Less' : 'More'}
+                            <ChevronDown 
+                              className={`w-4 h-4 transition-transform ${
+                                expandedCarId === car.id ? 'rotate-180' : ''
+                              }`}
+                            />
+                          </button>
+                        </div>
+
+                        {/* Expandable Details */}
+                        <AnimatePresence>
+                          {expandedCarId === car.id && (
+                            <motion.div
+                              initial={{ opacity: 0, height: 0 }}
+                              animate={{ opacity: 1, height: 'auto' }}
+                              exit={{ opacity: 0, height: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="border-t border-gray-100 pt-4"
+                            >
+                              <h4 className="font-semibold text-gray-900 mb-3">Premium Features</h4>
+                              <div className="grid grid-cols-2 gap-2 mb-4 text-sm text-gray-600">
+                                <div className="flex items-center gap-2">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                  {car.air_conditioning ? "Climate Control" : "Manual AC"}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                  Bluetooth
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                  Navigation
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                  {car.luggage_capacity} Bags
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                  {car.insurance_coverage ? "Full Insurance" : "Basic Insurance"}
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                                  24/7 Support
+                                </div>
+                              </div>
+                              <Link to={`/book/${car.slug}`}>
+                                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
+                                  Book This Vehicle
+                                </button>
+                              </Link>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
                     </div>
                   </div>
                 </motion.article>
               ))
             ) : (
               <motion.div 
-                className="col-span-full text-center py-12"
+                className="col-span-full text-center py-16"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <h3 className="text-xl font-semibold mb-2">No vehicles found</h3>
-                <p className="text-gray-500 dark:text-gray-400">
-                  We don't have any {selectedCategory.toLowerCase()} vehicles in our fleet currently.
-                  Please check back later or try another category.
+                <Car className="w-24 h-24 text-gray-300 mx-auto mb-6" />
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">No vehicles found</h3>
+                <p className="text-gray-600 max-w-md mx-auto mb-6">
+                  {searchQuery 
+                    ? `No vehicles match "${searchQuery}" in ${selectedCategory !== "All" ? selectedCategory : "our fleet"}.`
+                    : `We don't have any ${selectedCategory.toLowerCase()} vehicles available at the moment.`
+                  }
                 </p>
-                <button 
-                  onClick={() => setSelectedCategory("All")}
-                  className="mt-4 text-blue-600 dark:text-blue-400 font-medium hover:underline"
-                >
-                  View all vehicles
-                </button>
+                <div className="flex gap-4 justify-center">
+                  <button 
+                    onClick={() => setSelectedCategory("All")}
+                    className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
+                  >
+                    View All Vehicles
+                  </button>
+                  <button 
+                    onClick={() => setSearchQuery("")}
+                    className="border border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors"
+                  >
+                    Clear Search
+                  </button>
+                </div>
               </motion.div>
             )}
           </AnimatePresence>
