@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Calendar, Clock, User, MapPin, CreditCard, Check, Upload, Banknote, ArrowLeft, Car, Shield, Phone } from "lucide-react";
 import { motion } from "framer-motion";
 import axios from "axios";
@@ -33,7 +33,7 @@ interface BookingFormData {
 
 const BookingPage = () => {
   const { slug } = useParams();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [selectedVehicle, setSelectedVehicle] = useState<Vehicle | null>(null);
