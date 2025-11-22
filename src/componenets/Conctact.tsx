@@ -36,7 +36,7 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post("http://drivewithstyle.up.railway.app/api/v1/contact/", formData);
+      const response = await axios.post("https://drivewithstyle.up.railway.app/api/v1/contact/", formData);
       
       if (response.status === 201) {
         setSubmitStatus({

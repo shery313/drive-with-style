@@ -63,7 +63,7 @@ const BookingPage = () => {
     const fetchVehicles = async () => {
       try {
         setIsLoading(true);
-        const response = await axios.get("http://drivewithstyle.up.railway.app/api/v1/fleet/");
+        const response = await axios.get("https://drivewithstyle.up.railway.app/api/v1/fleet/");
         setVehicles(response.data);
         
         if (slug) {
@@ -130,7 +130,7 @@ const BookingPage = () => {
       formPayload.append('dropoff_location', formData.dropoffLocation);
       
       const response = await axios.post(
-        "http://drivewithstyle.up.railway.app/api/v1/booking/", 
+        "https://drivewithstyle.up.railway.app/api/v1/booking/", 
         formPayload,
         {
           headers: {
