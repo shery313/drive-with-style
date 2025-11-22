@@ -35,7 +35,7 @@ const Fleet = () => {
   useEffect(() => {
     const fetchCars = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/v1/fleet/");
+        const response = await axios.get("http://drivewithstyle.up.railway.app/api/v1/fleet/");
         setCars(response.data);
         setLoading(false);
       } catch (err) {
