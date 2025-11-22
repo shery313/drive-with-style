@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Phone, Star, Car, Calendar, Smile, Shield, MapPin, Clock, Fuel, ArrowRight, CheckCircle } from "lucide-react";
+import { Phone, Star, Car, Calendar, Smile, Shield, MapPin, Clock, ArrowRight, CheckCircle } from "lucide-react";
 import TrustedBy from "./TrustedBy";
 
 const Home = () => {
