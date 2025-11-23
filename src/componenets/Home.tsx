@@ -47,7 +47,7 @@ const Home = () => {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white text-gray-900">
+    <main className="min-h-screen bg-white text-gray-900 px-1">
       {/* SEO Meta - Add this to your index.html or use React Helmet */}
       {/* 
         <title>Drive With Style - Premium Car Rentals in Islamabad</title>
@@ -154,14 +154,14 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-2xl border border-gray-100"
+                className="absolute -bottom-6 -left-3 md:-left-6 bg-white rounded-2xl p-6 shadow-2xl border border-gray-100"
                 role="complementary"
               >
                 <div className="flex items-center gap-4">
                   <div className="bg-blue-100 p-3 rounded-xl">
                     <Car className="w-6 h-6 text-blue-600" aria-hidden="true" />
                   </div>
-                  <div>
+                  <div className="">
                     <p className="text-2xl font-bold text-gray-900">50+</p>
                     <p className="text-sm text-gray-600">Premium Vehicles</p>
                   </div>
@@ -453,7 +453,7 @@ const Home = () => {
           <p className="text-xl mb-8 text-gray-300">
             Contact us today to book your luxury vehicle or ask any questions
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
+          <div className="flex flex-wrap  justify-center gap-4">
             <Link
               to="/book"
               className="bg-white text-gray-900 px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 shadow-2xl transition-all duration-300 hover:scale-105 flex items-center gap-3"
