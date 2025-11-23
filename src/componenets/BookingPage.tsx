@@ -708,7 +708,7 @@ const BookingPage = () => {
                               </div>
                               <div className="flex justify-between">
                                 <span>Account Number:</span>
-                                <span className="font-medium">1234567890123</span>
+                                <span className="font-medium">53307000024155</span>
                               </div>
                               <div className="flex justify-between">
                                 <span>IBAN:</span>
