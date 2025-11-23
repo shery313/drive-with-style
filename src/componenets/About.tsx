@@ -55,7 +55,7 @@ const About = () => {
       "name": "Drive With Style",
       "description": "Premium Car Rental Service in Islamabad",
       "url": "https://drivewithstyles.com",
-      "logo": "https://drivewithstyles.com/logo.png",
+      "logo": "https://drivewithstyle.up.railway.app/media/vehicles/logo1.jpg",
       "sameAs": [
         "https://facebook.com/drivewithstyle",
         "https://instagram.com/drivewithstyle"
@@ -153,7 +153,7 @@ const About = () => {
                 itemProp="mission"
               >
                 <div className="bg-blue-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="https://www.w3.org/2000/svg" className="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                 </div>
@@ -173,7 +173,7 @@ const About = () => {
                 itemProp="slogan"
               >
                 <div className="bg-purple-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-6">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg xmlns="https://www.w3.org/2000/svg" className="h-8 w-8 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
                 </div>

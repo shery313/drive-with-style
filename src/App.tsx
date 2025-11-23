@@ -18,9 +18,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      
+      <ScrollToTop/>
         <Navbar />
-        <ScrollToTop/>
+        
         <WhatsAppButton/>
         <Routes>
           <Route path="/" element={<Home  />} />

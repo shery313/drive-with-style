@@ -5,7 +5,20 @@ const ScrollToTop = () => {
     const { pathname } = useLocation();
 
     useEffect(() => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        const timer = setTimeout(() => {
+            // Check if smooth scrolling is supported
+            if ('scrollBehavior' in document.documentElement.style) {
+                window.scrollTo({ 
+                    top: 0, 
+                    behavior: "smooth" 
+                });
+            } else {
+                // Fallback for older browsers
+                window.scrollTo(0, 0);
+            }
+        }, 0);
+
+        return () => clearTimeout(timer);
     }, [pathname]);
 
     return null;
