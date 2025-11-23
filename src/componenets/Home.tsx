@@ -6,7 +6,7 @@ import TrustedBy from "./TrustedBy";
 import axios from "axios";
 
 // Vehicle type interface
-const Vehicle = {
+interface Vehicle  {
   id: number;
   name: string;
   vehicle_type: string;

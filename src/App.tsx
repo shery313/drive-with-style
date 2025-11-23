@@ -4,7 +4,6 @@ import Navbar from './componenets/Navbar'
 import Home from './componenets/Home'
 import Fleet from './componenets/Fleet'
 import Footer from './componenets/Footer'
-import Pricing from './componenets/Pricing'
 import About from './componenets/About'
 import Contact from './componenets/Conctact'
 import ScrollToTop from './componenets/ScrollToTop'
@@ -27,7 +26,6 @@ function App() {
           <Route path="/" element={<Home  />} />
           <Route path="/fleet" element={<Fleet  />} />
           <Route path="/fleet/:slug" element={<FleetDetail  />} />
-          <Route path="/pricing" element={<Pricing  />} />
           <Route path="/about" element={<About  />} />
           <Route path="/contact" element={<Contact  />} />
           <Route path="/book" element={<BookingPage  />} />
