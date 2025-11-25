@@ -64,7 +64,7 @@ const About = () => {
     "mainEntity": {
       "@type": "Organization",
       "name": "Drive With Style",
-      "foundingDate": "2015",
+      "foundingDate": "2021",
       "founder": {
         "@type": "Person",
         "name": "Adnan Sajjad Satti",
