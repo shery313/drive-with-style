@@ -257,7 +257,7 @@ const About = () => {
                 </h2>
                 <div className="space-y-4 text-gray-600">
                   <p className="text-lg leading-relaxed">
-                    <strong>Adnan Sajjad Satti</strong> founded Drive With Style in 2015 with a vision to revolutionize 
+                    <strong>Adnan Sajjad Satti</strong> founded Drive With Style in 2021 with a vision to revolutionize 
                     luxury transportation services in Islamabad. With over 8 years of experience in the automotive and 
                     service industry, Adnan has built the company from a single luxury sedan into Islamabad's premier 
                     car rental service.
@@ -292,7 +292,7 @@ const About = () => {
                   <h2 id="our-story-heading" className="text-4xl font-bold mb-6 text-gray-900">Our Journey in Car Rentals</h2>
                   <div className="space-y-4 text-gray-600">
                     <p className="text-lg leading-relaxed">
-                      Founded in 2015 by <strong>Adnan Sajjad Satti</strong>, Drive With Style began with a single luxury sedan 
+                      Founded in 2021 by <strong>Adnan Sajjad Satti</strong>, Drive With Style began with a single luxury sedan 
                       and a vision to revolutionize premium transportation services in Islamabad.
                     </p>
                     <p className="text-lg leading-relaxed">
