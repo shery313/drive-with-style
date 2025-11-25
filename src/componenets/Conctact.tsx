@@ -41,7 +41,7 @@ const Contact = () => {
         "@type": "Organization",
         "name": "Drive With Style",
         "url": "https://drivewithstyles.com",
-        "logo": "https://drivewithstyle.up.railway.app/media/vehicles/logo1.jpg",
+        "logo": "https://res.cloudinary.com/dy05jtbao/image/upload/v1763999745/uwm2q7mlfyvczxdnwzry.png",
         "sameAs": [
           "https://facebook.com/drivewithstyle",
           "https://instagram.com/drivewithstyle"
