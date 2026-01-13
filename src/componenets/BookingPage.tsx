@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Calendar, Clock,  MapPin,  Check, ArrowLeft, Car, Phone, Search, Filter } from "lucide-react";
+import { Calendar, Clock, User, MapPin, CreditCard, Check, Upload, Banknote, ArrowLeft, Car, Shield, Phone, Search, Filter } from "lucide-react";
 import { motion } from "framer-motion";
 import axios from "axios";
 
