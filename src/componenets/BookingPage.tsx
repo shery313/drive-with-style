@@ -312,15 +312,16 @@ const BookingPage = () => {
       formPayload.append('dropoff_location', formData.dropoffLocation || formData.pickupLocation);
       formPayload.append('total_amount', calculateTotalPrice().toString());
       
-      // const response = await axios.post(
-      //   "https://drivewithstyle.up.railway.app/api/v1/booking/", 
-      //   formPayload,
-      //   {
-      //     headers: {
-      //       'Content-Type': 'multipart/form-data'
-      //     }
-      //   }
-      // );
+      const response = await axios.post(
+        "https://drivewithstyle.up.railway.app/api/v1/booking/", 
+        formPayload,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      );
+      console.log(response.data)
       
       console.log("Booking payload:", Object.fromEntries(formPayload));
       // Simulate API call
