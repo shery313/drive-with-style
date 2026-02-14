@@ -1305,7 +1305,7 @@ const BookingPage = () => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", damping: 25 }}
-                className="bg-white rounded-3xl max-w-2xl w-full overflow-hidden"
+                className="bg-white rounded-3xl  w-fit overflow-hidden"
               >
                 <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-8 text-center">
                   <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
