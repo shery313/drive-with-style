@@ -319,7 +319,8 @@ const BookingPage = () => {
         {
           headers: {
             'Content-Type': 'multipart/form-data'
-          }
+          },
+          timeout:60000
         }
       );
       console.log(response.data)
