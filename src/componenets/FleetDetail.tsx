@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { SERVER_URL } from "../constant";
 
 // Car type based on your API response
 type CarType = {
@@ -35,7 +36,7 @@ const FleetDetail = () => {
     const fetchCarDetail = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`https://drivewithstyle.up.railway.app/api/v1/fleet/${slug}/`);
+        const response = await axios.get(`${SERVER_URL}/api/v1/fleet/${slug}/`);
         setCar(response.data);
         setError(null);
       } catch (err) {

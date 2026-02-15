@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import TrustedBy from "./TrustedBy";
 import axios from "axios";
+import { SERVER_URL } from "../constant";
 
 // Vehicle type interface
 interface Vehicle {
@@ -32,7 +33,7 @@ const Home = () => {
     const fetchFeaturedVehicles = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('https://drivewithstyle.up.railway.app/api/v1/fleet/');
+        const response = await axios.get(`${SERVER_URL}/api/v1/fleet/`);
         const vehicles = response.data.slice(0, 3);
         setFeaturedVehicles(vehicles);
         setError(null);

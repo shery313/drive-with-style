@@ -3,6 +3,7 @@ import { Phone, Mail, MapPin, Clock, MessageSquare, User, Send, CheckCircle } fr
 import { useState } from "react";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import { SERVER_URL } from "../constant";
 
 type FormData = {
   name: string;
@@ -78,7 +79,7 @@ const Contact = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await axios.post("https://drivewithstyle.up.railway.app/api/v1/contact/", formData);
+      const response = await axios.post(`${SERVER_URL}/api/v1/contact/`, formData);
       
       if (response.status === 201) {
         setSubmitStatus({

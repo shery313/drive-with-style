@@ -9,6 +9,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import { SERVER_URL } from "../constant";
 
 type CarType = {
   id: number;
@@ -79,7 +80,7 @@ const Fleet = () => {
     const fetchCars = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("https://drivewithstyle.up.railway.app/api/v1/fleet/");
+        const response = await axios.get(`${SERVER_URL}/api/v1/fleet/`);
         setCars(response.data);
         setLoading(false);
       } catch (err) {

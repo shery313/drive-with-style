@@ -12,6 +12,7 @@ import {
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
+import { SERVER_URL } from "../constant";
 
 interface Vehicle {
   id: number;
@@ -189,7 +190,7 @@ const BookingPage = () => {
       try {
         setIsLoading(true);
         // const response = await axios.get("https://drivewithstyle.up.railway.app/api/v1/fleet/");
-        const response = await axios.get("https://drivewithstyle.up.railway.app/api/v1/fleet/");
+        const response = await axios.get(`${SERVER_URL}/api/v1/fleet/`);
         setVehicles(response.data);
         
         if (slug) {
@@ -313,7 +314,7 @@ const BookingPage = () => {
       formPayload.append('total_amount', calculateTotalPrice().toString());
       
       const response = await axios.post(
-        "https://drivewithstyle.up.railway.app/api/v1/booking/", 
+          `${SERVER_URL}/api/v1/booking/`, 
         formPayload,
         {
           headers: {
@@ -741,7 +742,7 @@ const BookingPage = () => {
                                     </button>
                                   </motion.div>
                                 ) : (
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
                                     {filteredVehicles.map((vehicle) => (
                                       <motion.div
                                         key={vehicle.id}
@@ -757,12 +758,12 @@ const BookingPage = () => {
                                           <div>
                                             <h4 className="font-bold text-gray-900 text-lg">{vehicle.name}</h4>
                                             <p className="text-gray-600 text-sm">{vehicle.vehicle_type}</p>
-                                            {vehicle.rating && (
+                                            {/* {vehicle.rating && (
                                               <div className="flex items-center gap-1 mt-1">
                                                 <Star className="w-4 h-4 text-yellow-400" fill="currentColor" />
                                                 <span className="text-sm text-gray-600">{vehicle.rating.toFixed(1)}</span>
                                               </div>
-                                            )}
+                                            )} */}
                                           </div>
                                           <input
                                             type="radio"
@@ -777,14 +778,14 @@ const BookingPage = () => {
                                         
                                         <div className="flex items-center justify-between">
                                           <div className="text-sm text-gray-600">
-                                            <div className="flex items-center gap-2">
+                                            {/* <div className="flex items-center gap-2">
                                               <Users className="w-4 h-4" />
                                               <span>{vehicle.seats} Seats</span>
-                                            </div>
-                                            <div className="flex items-center gap-2 mt-1">
+                                            </div> */}
+                                            {/* <div className="flex items-center gap-2 mt-1">
                                               <Fuel className="w-4 h-4" />
                                               <span>{vehicle.fuel_type}</span>
-                                            </div>
+                                            </div> */}
                                           </div>
                                           <div className="text-right">
                                             <div className="text-lg font-bold text-blue-600">
