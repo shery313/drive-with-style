@@ -3,11 +3,9 @@ import { Link, useParams } from "react-router-dom";
 import { 
   Calendar, Clock, User, MapPin, CreditCard, Check, Upload, Banknote, 
   ArrowLeft, Car, Shield, Phone, Search, Filter, ChevronRight, 
-  Mail, MessageSquare, Star, CheckCircle, Info, X, Loader2,
+  Mail, MessageSquare, CheckCircle, Info, X, Loader2,
   CalendarDays, Navigation, CreditCard as CardIcon, FileText,
   ShieldCheck, Sparkles, BadgeCheck, Receipt,
-  Users,
-  Fuel
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
@@ -47,6 +45,10 @@ interface BookingFormData {
   termsAccepted: boolean;
 }
 
+interface BookingResponse {
+  booking_reference: string;
+}
+
 const VEHICLE_CATEGORIES = [
   { id: "all", name: "All Vehicles", icon: "🚗", color: "from-blue-500 to-cyan-500" },
   { id: "sedan", name: "Sedans", icon: "🚙", color: "from-indigo-500 to-purple-500" },
@@ -70,13 +72,6 @@ const PAYMENT_METHODS = [
     icon: CreditCard,
     description: "Pay in cash on vehicle delivery",
     details: "Exact change recommended"
-  },
-  { 
-    id: "easypaisa", 
-    name: "EasyPaisa/JazzCash", 
-    icon: CreditCard,
-    description: "Mobile wallet payment",
-    details: "Use our registered number"
   }
 ];
 
@@ -105,7 +100,7 @@ const BookingPage = () => {
     paymentMethod: "bank-transfer",
     transactionId: "",
     paymentScreenshot: null,
-    booking_reference: `DWS${Math.floor(Math.random() * 900000) + 100000}`,
+    booking_reference: "",
     termsAccepted: false
   });
 
@@ -145,8 +140,13 @@ const BookingPage = () => {
     if (!formData.pickup_date || !formData.return_date) return 0;
     const start = new Date(formData.pickup_date);
     const end = new Date(formData.return_date);
-    const diffTime = Math.abs(end.getTime() - start.getTime());
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 1;
+    const diffTime = end.getTime() - start.getTime();
+
+    if (Number.isNaN(diffTime) || diffTime < 0) {
+      return 0;
+    }
+
+    return Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 1);
   };
 
   // Calculate total price
@@ -270,7 +270,14 @@ const BookingPage = () => {
   const validateStep = () => {
     switch (step) {
       case 1:
-        return formData.vehicle && formData.pickupLocation && formData.pickup_date && formData.pickup_time && formData.return_date;
+        return Boolean(
+          formData.vehicle &&
+          formData.pickupLocation &&
+          formData.pickup_date &&
+          formData.pickup_time &&
+          formData.return_date &&
+          calculateDuration() > 0
+        );
       case 2:
         return formData.fullName && formData.email && formData.phone;
       case 3:
@@ -295,25 +302,35 @@ const BookingPage = () => {
       setSubmitting(true);
       
       const formPayload = new FormData();
-      
-      // Append all form data
-      Object.entries(formData).forEach(([key, value]) => {
-        if (key === 'paymentScreenshot' && value) {
-          formPayload.append('payment_proof', value);
-        } else if (value !== null && value !== undefined) {
-          formPayload.append(key, value.toString());
-        }
-      });
-      
-      // Append additional required fields
-      formPayload.append('customer_name', formData.fullName);
-      formPayload.append('customer_email', formData.email);
-      formPayload.append('customer_phone', formData.phone);
-      formPayload.append('pickup_location', formData.pickupLocation);
-      formPayload.append('dropoff_location', formData.dropoffLocation || formData.pickupLocation);
-      formPayload.append('total_amount', calculateTotalPrice().toString());
-      
-      const response = await axios.post(
+
+      formPayload.append("vehicle", String(formData.vehicle));
+      formPayload.append("customer_name", formData.fullName.trim());
+      formPayload.append("customer_email", formData.email.trim());
+      formPayload.append("customer_phone", formData.phone.trim());
+      formPayload.append("pickup_location", formData.pickupLocation.trim());
+      formPayload.append(
+        "dropoff_location",
+        (formData.dropoffLocation || formData.pickupLocation).trim()
+      );
+      formPayload.append("pickup_date", formData.pickup_date);
+      formPayload.append("pickup_time", formData.pickup_time);
+      formPayload.append("return_date", formData.return_date);
+      formPayload.append("payment_method", formData.paymentMethod);
+      formPayload.append("terms_accepted", String(formData.termsAccepted));
+
+      if (formData.specialRequests.trim()) {
+        formPayload.append("special_requests", formData.specialRequests.trim());
+      }
+
+      if (formData.transactionId.trim()) {
+        formPayload.append("transaction_id", formData.transactionId.trim());
+      }
+
+      if (formData.paymentScreenshot) {
+        formPayload.append("payment_proof", formData.paymentScreenshot);
+      }
+
+      const response = await axios.post<BookingResponse>(
           `${SERVER_URL}/api/v1/booking/`, 
         formPayload,
         {
@@ -323,13 +340,12 @@ const BookingPage = () => {
           timeout:60000
         }
       );
-      console.log(response.data)
-      
-      console.log("Booking payload:", Object.fromEntries(formPayload));
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      nextStep(); // Go to confirmation
+
+      setFormData((prev) => ({
+        ...prev,
+        booking_reference: response.data.booking_reference,
+      }));
+      nextStep();
     } catch (err) {
       console.error("Error submitting booking:", err);
       alert("There was an error submitting your booking. Please try again or contact support.");
@@ -353,7 +369,7 @@ const BookingPage = () => {
       paymentMethod: "bank-transfer",
       transactionId: "",
       paymentScreenshot: null,
-      booking_reference: `DWS${Math.floor(Math.random() * 900000) + 100000}`,
+      booking_reference: "",
       termsAccepted: false
     });
     setSelectedVehicle(null);
@@ -366,7 +382,7 @@ const BookingPage = () => {
         <Helmet>
           <title>Loading Booking | Drive With Style | Premium Car Rentals</title>
         </Helmet>
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
+        <div className="dws-page min-h-screen flex items-center justify-center px-4 text-slate-100">
           <div className="text-center">
             <div className="relative">
               <div className="absolute inset-0 flex items-center justify-center">
@@ -390,8 +406,8 @@ const BookingPage = () => {
         <Helmet>
           <title>Error Loading Booking | Drive With Style</title>
         </Helmet>
-        <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center">
-          <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 sm:p-12 max-w-md mx-auto shadow-xl border border-gray-100 text-center">
+        <div className="dws-page min-h-screen flex items-center justify-center px-4 text-slate-100">
+          <div className="dws-glass rounded-3xl p-8 sm:p-12 max-w-md mx-auto text-center">
             <div className="bg-red-50 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <X className="w-8 h-8 text-red-500" />
             </div>
@@ -399,7 +415,7 @@ const BookingPage = () => {
             <p className="text-gray-600 mb-8">{error}</p>
             <button 
               onClick={() => window.location.reload()}
-              className="group inline-flex items-center justify-center bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300"
+              className="dws-button-primary group px-8 py-4 text-sm"
             >
               <span className="flex items-center gap-3">
                 Try Again
@@ -431,7 +447,7 @@ const BookingPage = () => {
         </script>
       </Helmet>
 
-      <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white" itemScope itemType="https://schema.org/Service">
+      <main className="dws-page min-h-screen text-slate-100" itemScope itemType="https://schema.org/Service">
         {/* Hero Header */}
         <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 text-white py-20">
           <div className="absolute inset-0">
@@ -445,14 +461,14 @@ const BookingPage = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center max-w-3xl mx-auto"
             >
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2.5 mb-6 border border-white/20">
+              <div className="dws-label mb-6">
                 <Sparkles className="w-4 h-4" />
-                <span className="text-sm font-semibold tracking-wide">SECURE BOOKING</span>
+                <span className="text-sm font-semibold tracking-wide">Secure Booking</span>
               </div>
               <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight" itemProp="name">
                 Reserve Your 
                 <span className="block mt-2">
-                  <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                  <span className="dws-title-gradient">
                     Premium Vehicle
                   </span>
                 </span>
@@ -475,7 +491,7 @@ const BookingPage = () => {
               <Link 
                 to={step === 1 ? "/fleet" : "#"} 
                 onClick={step > 1 ? prevStep : undefined}
-                className="group inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 transition-colors bg-white rounded-xl px-4 py-2.5 shadow-sm border border-gray-100 hover:shadow-md"
+                className="group inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2.5 text-slate-200 transition hover:bg-white/[0.08]"
               >
                 <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 {step === 1 ? "Back to Fleet" : "Back"}
@@ -541,7 +557,7 @@ const BookingPage = () => {
               transition={{ duration: 0.3 }}
               className="lg:col-span-2"
             >
-              <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="dws-glass rounded-2xl overflow-hidden">
                 <form onSubmit={handleSubmit}>
                   {/* Step 1: Trip Details */}
                   {step === 1 && (
@@ -1179,7 +1195,7 @@ const BookingPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6"
+                className="dws-glass rounded-2xl p-6"
               >
                 <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                   <Receipt className="text-blue-600" />
@@ -1283,7 +1299,7 @@ const BookingPage = () => {
           {/* Support Footer */}
           {step !== 4 && (
             <footer className="mt-8 text-center">
-              <div className="inline-flex items-center gap-3 text-gray-600 bg-white rounded-2xl px-8 py-4 shadow-sm border border-gray-100">
+              <div className="inline-flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-8 py-4 text-slate-300">
                 <Info className="w-5 h-5 text-blue-600" />
                 <span>Need help with your booking? Call us at</span>
                 <a href="tel:+923125430959" className="text-blue-600 font-semibold hover:underline">
@@ -1307,19 +1323,19 @@ const BookingPage = () => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ type: "spring", damping: 25 }}
-                className="bg-white rounded-3xl max-w-2xl max-h-screen  overflow-hidden"
+                className="dws-glass max-h-screen max-w-2xl overflow-hidden rounded-3xl"
               >
                 <div className="bg-gradient-to-r from-green-500 to-emerald-600 text-white p-8 text-center">
                   <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Check className="w-10 h-10" />
                   </div>
-                  <h2 className="text-3xl font-bold mb-4">Booking Confirmed!</h2>
-                  <p className="text-emerald-100">Your premium vehicle has been successfully reserved</p>
+                  <h2 className="text-3xl font-bold mb-4">Booking Received!</h2>
+                  <p className="text-emerald-100">Your request has been submitted and is awaiting confirmation</p>
                 </div>
 
                 <div className="p-8">
                   <div className="text-center mb-8">
-                    <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 rounded-full px-4 py-2 mb-4">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-sky-300/18 bg-sky-300/10 px-4 py-2 mb-4 text-sky-100">
                       <BadgeCheck className="w-4 h-4" />
                       <span className="font-semibold">BOOKING REFERENCE</span>
                     </div>
@@ -1352,7 +1368,7 @@ const BookingPage = () => {
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 text-sm text-gray-600">
                       <CheckCircle className="w-5 h-5 text-green-500" />
-                      <span>Confirmation email sent to {formData.email}</span>
+                      <span>Booking details sent to {formData.email}</span>
                     </div>
                     <div className="flex items-center gap-3 text-sm text-gray-600">
                       <CheckCircle className="w-5 h-5 text-green-500" />
@@ -1367,13 +1383,13 @@ const BookingPage = () => {
                   <div className="mt-8 flex flex-col sm:flex-row gap-4">
                     <button
                       onClick={handleStartNewBooking}
-                      className="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-4 rounded-xl font-semibold hover:shadow-xl hover:shadow-blue-500/25 transition-all duration-300"
+                      className="dws-button-primary flex-1 py-4 text-sm"
                     >
                       Book Another Vehicle
                     </button>
                     <Link
                       to="/"
-                      className="flex-1 border-2 border-gray-300 text-gray-700 py-4 rounded-xl font-semibold text-center hover:bg-gray-50 transition-all duration-300"
+                      className="dws-button-secondary flex-1 py-4 text-center text-sm"
                     >
                       Back to Home
                     </Link>

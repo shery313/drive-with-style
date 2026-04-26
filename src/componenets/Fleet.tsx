@@ -31,6 +31,7 @@ type CarType = {
 
 const categories = ["All", "Hatchback", "Sedan", "SUV", "Luxury"] as const;
 type Category = (typeof categories)[number];
+type SortOption = "price_low" | "price_high" | "rating" | "seats";
 
 const Fleet = () => {
   const [selectedCategory, setSelectedCategory] = useState<Category>("All");
@@ -39,7 +40,7 @@ const Fleet = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState<"price_low" | "price_high" | "rating" | "seats">("price_low");
+  const [sortBy, setSortBy] = useState<SortOption>("price_low");
   
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
@@ -103,9 +104,9 @@ const Fleet = () => {
     .sort((a, b) => {
       switch (sortBy) {
         case "price_low":
-          return parseInt(a.price_per_day) - parseInt(b.price_per_day);
+          return parseFloat(a.price_per_day) - parseFloat(b.price_per_day);
         case "price_high":
-          return parseInt(b.price_per_day) - parseInt(a.price_per_day);
+          return parseFloat(b.price_per_day) - parseFloat(a.price_per_day);
         case "rating":
           return b.rating - a.rating;
         case "seats":
@@ -146,7 +147,7 @@ const Fleet = () => {
           <title>Loading Fleet | Drive With Style | Premium Car Rentals Islamabad</title>
           <meta name="description" content="Loading our premium fleet of luxury vehicles for rent in Islamabad" />
         </Helmet>
-        <section className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-20">
+        <section className="dws-page min-h-screen py-20 text-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center">
               <div className="relative">
@@ -173,9 +174,9 @@ const Fleet = () => {
           <title>Fleet Unavailable | Drive With Style | Car Rentals Islamabad</title>
           <meta name="description" content="Temporary issue loading our vehicle fleet. Please try again." />
         </Helmet>
-        <section className="min-h-screen bg-gradient-to-b from-gray-50 to-white py-20">
+        <section className="dws-page min-h-screen py-20 text-slate-100">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-8 sm:p-12 max-w-xl mx-auto shadow-xl border border-gray-100">
+            <div className="dws-glass rounded-3xl p-8 sm:p-12 max-w-xl mx-auto">
               <div className="bg-red-50 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <X className="w-10 h-10 text-red-500" />
               </div>
@@ -226,7 +227,7 @@ const Fleet = () => {
         </script>
       </Helmet>
 
-      <main className="min-h-screen bg-gradient-to-b from-gray-50 to-white" itemScope itemType="https://schema.org/ItemList">
+      <main className="dws-page min-h-screen text-slate-100" itemScope itemType="https://schema.org/ItemList">
         {/* Hero Header */}
         <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 text-white py-24">
           {/* Background elements */}
@@ -241,14 +242,14 @@ const Fleet = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-center max-w-4xl mx-auto"
             >
-              <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2.5 mb-6 border border-white/20">
+              <div className="dws-label mb-6">
                 <Sparkles className="w-4 h-4" />
-                <span className="text-sm font-semibold tracking-wide">EXCLUSIVE FLEET</span>
+                <span className="text-sm font-semibold tracking-wide">Exclusive Fleet</span>
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight" itemProp="name">
                 Premium Vehicle 
                 <span className="block mt-2">
-                  <span className="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+                  <span className="dws-title-gradient">
                     Collection
                   </span>
                 </span>
@@ -260,7 +261,7 @@ const Fleet = () => {
               <div className="flex flex-wrap justify-center gap-4">
                 <Link
                   to="/book"
-                  className="group bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-xl font-semibold hover:shadow-2xl hover:shadow-blue-500/25 transition-all duration-300 hover:scale-105"
+                  className="dws-button-primary group px-8 py-4 text-sm"
                 >
                   <span className="flex items-center gap-3">
                     Book Now
@@ -269,7 +270,7 @@ const Fleet = () => {
                 </Link>
                 <a
                   href="tel:+923125430959"
-                  className="group bg-white/10 backdrop-blur-sm border border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300"
+                  className="dws-button-secondary group px-8 py-4 text-sm"
                 >
                   <span className="flex items-center gap-3">
                     <Phone className="w-4 h-4" />
@@ -295,7 +296,7 @@ const Fleet = () => {
               { icon: TrendingUp, label: "Client Satisfaction", value: "99%", color: "bg-amber-500" },
               { icon: Clock, label: "Availability", value: "24/7", color: "bg-purple-500" },
             ].map((stat, index) => (
-              <div key={index} className="bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+              <div key={index} className="dws-glass rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1">
                 <div className="flex items-center gap-4">
                   <div className={`${stat.color} w-12 h-12 rounded-xl flex items-center justify-center`}>
                     <stat.icon className="w-6 h-6 text-white" />
@@ -316,7 +317,7 @@ const Fleet = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 mb-8"
+            className="dws-glass rounded-2xl p-6 mb-8"
           >
             <div className="flex flex-col lg:flex-row gap-6 items-center justify-between">
               {/* Search Bar */}
@@ -328,7 +329,7 @@ const Fleet = () => {
                     placeholder="Search vehicles by name, type, or features..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all placeholder-gray-500"
+                    className="dws-field w-full pl-12 pr-4 py-3.5 placeholder-gray-500"
                   />
                   {searchQuery && (
                     <button
@@ -346,8 +347,8 @@ const Fleet = () => {
                 <span className="text-sm font-medium text-gray-700">Sort by:</span>
                 <select
                   value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value as any)}
-                  className="bg-gray-50 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  onChange={(e) => setSortBy(e.target.value as SortOption)}
+                  className="dws-field rounded-xl px-4 py-2.5 text-sm"
                 >
                   <option value="price_low">Price: Low to High</option>
                   <option value="price_high">Price: High to Low</option>
@@ -371,7 +372,7 @@ const Fleet = () => {
                     className={`px-5 py-2.5 rounded-xl text-sm font-medium transition-all duration-300 ${
                       selectedCategory === category
                         ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
-                        : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                        : "bg-white/[0.04] text-slate-300 hover:bg-white/[0.08]"
                     }`}
                   >
                     {category}
@@ -421,7 +422,7 @@ const Fleet = () => {
                     itemScope
                     itemType="https://schema.org/Car"
                   >
-                    <div className="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-2xl transition-all duration-500 group-hover:-translate-y-2 h-full flex flex-col">
+                    <div className="dws-glass rounded-2xl overflow-hidden border border-white/10 transition-all duration-500 group-hover:-translate-y-2 h-full flex flex-col">
                       {/* Image Section */}
                       <div className="relative overflow-hidden h-64">
                         <img
@@ -485,11 +486,11 @@ const Fleet = () => {
                         </div>
 
                         {/* Price and Actions */}
-                        <div className="mt-auto border-t border-gray-100 pt-4">
+                        <div className="mt-auto border-t border-white/10 pt-4">
                           <div className="flex justify-between items-center mb-4">
                             <div>
                               <div className="text-2xl font-bold text-blue-600" itemProp="price">
-                                Rs. {Math.round(parseInt(car.price_per_day))}
+                                Rs. {Math.round(parseFloat(car.price_per_day))}
                               </div>
                               <div className="text-xs text-gray-500">per day</div>
                             </div>
@@ -517,7 +518,7 @@ const Fleet = () => {
                                 animate={{ opacity: 1, height: 'auto' }}
                                 exit={{ opacity: 0, height: 0 }}
                                 transition={{ duration: 0.3 }}
-                                className="border-t border-gray-100 pt-4"
+                                className="border-t border-white/10 pt-4"
                               >
                                 <div className="mb-4">
                                   <h4 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
@@ -555,14 +556,14 @@ const Fleet = () => {
                                   <Link to={`/book/${car.slug}`} className="flex-1">
                                     <button 
                                       onClick={(e) => e.stopPropagation()}
-                                      className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 px-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 text-center"
+                                      className="dws-button-primary w-full py-3 px-4 text-sm"
                                     >
                                       Book Now
                                     </button>
                                   </Link>
                                   <button 
                                     onClick={(e) => handleViewDetails(car, e)}
-                                    className="flex items-center justify-center gap-2 border border-blue-600 text-blue-600 py-3 px-4 rounded-xl font-semibold hover:bg-blue-50 transition-all duration-300 flex-1"
+                                    className="dws-button-secondary flex flex-1 items-center justify-center gap-2 py-3 px-4 text-sm"
                                   >
                                     Details
                                     <ArrowRight className="w-4 h-4" />
@@ -577,7 +578,7 @@ const Fleet = () => {
                             <Link to={`/book/${car.slug}`}>
                               <button 
                                 onClick={(e) => e.stopPropagation()}
-                                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3.5 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300 text-center mt-2"
+                                className="dws-button-primary mt-2 w-full py-3.5 text-sm"
                               >
                                 Quick Book
                               </button>
@@ -594,7 +595,7 @@ const Fleet = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                 >
-                  <div className="bg-gradient-to-br from-white to-gray-50 rounded-3xl p-12 max-w-md mx-auto border border-gray-200">
+                  <div className="dws-glass rounded-3xl p-12 max-w-md mx-auto">
                     <Car className="w-20 h-20 text-gray-300 mx-auto mb-6" />
                     <h3 className="text-2xl font-bold text-gray-900 mb-4">No vehicles found</h3>
                     <p className="text-gray-600 mb-8">
@@ -609,13 +610,13 @@ const Fleet = () => {
                           setSelectedCategory("All");
                           setSearchQuery("");
                         }}
-                        className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300"
+                        className="dws-button-primary px-6 py-3 text-sm"
                       >
                         View All Vehicles
                       </button>
                       <Link
                         to="/contact"
-                        className="border border-gray-300 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-all duration-300 text-center"
+                        className="dws-button-secondary px-6 py-3 text-sm text-center"
                       >
                         Contact Support
                       </Link>
@@ -636,7 +637,7 @@ const Fleet = () => {
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="p-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="rounded-lg border border-white/10 bg-white/[0.04] p-2 text-slate-200 transition-colors hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
@@ -660,7 +661,7 @@ const Fleet = () => {
                     className={`w-10 h-10 rounded-lg font-medium transition-all ${
                       currentPage === pageNumber
                         ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/25'
-                        : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
+                        : 'border border-white/10 bg-white/[0.04] text-slate-200 hover:bg-white/[0.08]'
                     }`}
                   >
                     {pageNumber}
@@ -671,7 +672,7 @@ const Fleet = () => {
               <button
                 onClick={() => handlePageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="rounded-lg border border-white/10 bg-white/[0.04] p-2 text-slate-200 transition-colors hover:bg-white/[0.08] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

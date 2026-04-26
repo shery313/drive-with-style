@@ -1,231 +1,171 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Phone, Car, Shield, Star } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { CarFront, Menu, Phone, Shield, Star, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
+
+const navLinks = [
+  { name: "Home", to: "/" },
+  { name: "Fleet", to: "/fleet" },
+  { name: "About", to: "/about" },
+  { name: "Contact", to: "/contact" },
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
 
-  const navLinks = [
-    { name: "Home", to: "/" },
-    { name: "Fleet", to: "/fleet" },
-    { name: "About", to: "/about" },
-    { name: "Contact", to: "/contact" },
-  ];
-
-  // Structured Data for Navigation
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Drive With Style",
-    "url": "https://drivewithstyles.com",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://drivewithstyles.com/fleet?search={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    name: "Drive With Style",
+    url: "https://drivewithstyles.com",
   };
 
   return (
     <>
       <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+        <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
-      <header className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-xl border-b border-gray-700 shadow-lg" role="banner">
+      <header className="sticky top-0 z-50 border-b border-white/8 bg-[#07111d]/80 backdrop-blur-2xl">
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
           <div className="flex h-20 items-center justify-between">
-            
-            {/* Logo & Brand */}
-            <div className="flex items-center space-x-3">
-              <Link 
-                to="/" 
-                className="flex items-center rounded-xl p-2 transition-all hover:bg-gray-800/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                aria-label="Drive with Style Home"
-              >
-                <img 
-                  src="/logo.png" 
-                  className="h-10 w-auto md:h-12" 
-                  alt="Drive with Style - Premium Car Rentals Islamabad" 
-                  width={120}
-                  height={56}
-                  loading="eager"
-                />
-                <div className="hidden md:block ml-2">
-                  <span className="block text-lg font-bold text-white">Drive with Style</span>
-                  <span className="block text-xs text-gray-300 font-medium">Premium Car Rentals</span>
-                </div>
-              </Link>
-            </div>
+            <Link
+              to="/"
+              className="flex items-center gap-3 rounded-2xl px-2 py-2 transition hover:bg-white/6"
+              aria-label="Drive With Style home"
+            >
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-300/18 bg-[linear-gradient(135deg,rgba(217,119,6,0.18),rgba(37,99,235,0.2))] text-amber-100 shadow-[0_0_40px_rgba(245,158,11,0.12)]">
+                <CarFront className="h-5 w-5" />
+              </div>
+              <div>
+                <span className="block text-lg font-semibold tracking-tight text-white">
+                  Drive With Style
+                </span>
+                <span className="block text-xs uppercase tracking-[0.24em] text-slate-400">
+                  Premium Car Rentals
+                </span>
+              </div>
+            </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-1">
-              <ul className="flex items-center space-x-1" role="menubar">
-                {navLinks.map((link) => (
-                  <li key={link.to} role="none">
-                    <Link
-                      to={link.to}
-                      className={`relative px-4 py-2.5 text-sm font-medium rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 ${
-                        location.pathname === link.to 
-                          ? "text-white bg-gray-800 font-semibold"
-                          : "text-gray-300 hover:text-white hover:bg-gray-800/50"
-                      }`}
-                      role="menuitem"
-                      aria-current={location.pathname === link.to ? "page" : undefined}
-                    >
-                      {link.name}
-                      {location.pathname === link.to && (
-                        <motion.span
-                          layoutId="nav-underline"
-                          className="absolute inset-0 rounded-xl bg-blue-500/20 border border-blue-400/30"
-                          initial={false}
-                          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                          aria-hidden="true"
-                        />
-                      )}
-                    </Link>
-                  </li>
-                ))}
+            <div className="hidden items-center gap-4 lg:flex">
+              <ul className="flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.04] px-2 py-2">
+                {navLinks.map((link) => {
+                  const active = location.pathname === link.to;
+                  return (
+                    <li key={link.to}>
+                      <Link
+                        to={link.to}
+                        className={`relative rounded-full px-4 py-2.5 text-sm font-medium transition ${
+                          active ? "text-white" : "text-slate-300 hover:text-white"
+                        }`}
+                      >
+                        {active && (
+                          <motion.span
+                            layoutId="nav-pill"
+                            className="absolute inset-0 rounded-full border border-amber-300/18 bg-amber-300/10"
+                            transition={{ type: "spring", duration: 0.55, bounce: 0.18 }}
+                          />
+                        )}
+                        <span className="relative z-10">{link.name}</span>
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
 
-              {/* Contact & CTA */}
-              <div className="ml-6 flex items-center space-x-3 border-l border-gray-700 pl-6">
-                <a 
-                  href="tel:+923125430959" 
-                  className="flex items-center space-x-2 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-300 transition-all hover:bg-gray-800/50 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                  aria-label="Call us at +92 312 5430959"
-                >
-                  <Phone size={16} />
-                  <span>+92 312 5430959</span>
-                </a>
-
-                <Link to="/book">
-                  <motion.button 
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="ml-2 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-6 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:shadow-xl hover:shadow-blue-500/30 hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                    aria-label="Book a vehicle now"
-                  >
-                    Book Now
-                  </motion.button>
-                </Link>
+              <div className="hidden items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/10 px-4 py-2 text-sm font-medium text-emerald-200 xl:flex">
+                <Shield className="h-4 w-4" />
+                Fully insured fleet
               </div>
+
+              <a
+                href="tel:+923125430959"
+                className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/[0.08] xl:flex"
+              >
+                <Phone className="h-4 w-4 text-amber-200" />
+                +92 312 5430959
+              </a>
+
+              <Link to="/book" className="dws-button-primary px-5 py-3 text-sm">
+                Book now
+              </Link>
             </div>
 
-            {/* Mobile Toggle */}
-            <div className="flex lg:hidden items-center space-x-2">
-              <Link to="/book">
-                <button className="rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900">
-                  Book
-                </button>
-              </Link>
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="inline-flex items-center justify-center rounded-xl p-2.5 text-gray-300 transition-all hover:bg-gray-800/50 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
-                aria-expanded={isOpen}
-                aria-label={isOpen ? "Close main menu" : "Open main menu"}
-                aria-controls="mobile-menu"
-              >
-                {isOpen ? (
-                  <X className="h-6 w-6" aria-hidden="true" />
-                ) : (
-                  <Menu className="h-6 w-6" aria-hidden="true" />
-                )}
-              </button>
-            </div>
+            <button
+              onClick={() => setIsOpen((open) => !open)}
+              className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] p-2.5 text-slate-200 transition hover:bg-white/[0.08] lg:hidden"
+              aria-expanded={isOpen}
+              aria-label={isOpen ? "Close main menu" : "Open main menu"}
+              aria-controls="mobile-menu"
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
           </div>
         </nav>
 
-        {/* Mobile Navigation */}
         <AnimatePresence>
           {isOpen && (
             <motion.div
+              id="mobile-menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="lg:hidden border-t border-gray-700 bg-gray-900/98 backdrop-blur-xl"
-              id="mobile-menu"
-              role="menu"
+              transition={{ duration: 0.25 }}
+              className="border-t border-white/8 bg-[#07111d]/96 px-4 pb-6 pt-4 backdrop-blur-2xl lg:hidden"
             >
-              <div className="px-4 pb-6 pt-4 space-y-1">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    onClick={() => setIsOpen(false)}
-                    className={`block rounded-xl px-4 py-3 text-base font-medium transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 ${
-                      location.pathname === link.to
-                        ? "bg-blue-500/20 text-white border border-blue-400/30"
-                        : "text-gray-300 hover:bg-gray-800/50 hover:text-white"
-                    }`}
-                    role="menuitem"
-                    aria-current={location.pathname === link.to ? "page" : undefined}
-                  >
-                    {link.name}
-                  </Link>
-                ))}
-                
-                {/* Mobile Contact Section */}
-                <div className="border-t border-gray-700 pt-4 space-y-3">
-                  <a 
-                    href="tel:+923125430959"
-                    className="flex w-full items-center space-x-3 rounded-xl px-4 py-3 text-base font-medium text-gray-300 transition-all hover:bg-gray-800/50 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    aria-label="Call us at +92 312 5430959"
-                  >
-                    <Phone size={18} />
-                    <span>+92 312 5430959</span>
-                  </a>
-                  
-                  {/* Trust Badges for Mobile */}
-                  <div className="grid grid-cols-3 gap-2 px-4 py-3 bg-gray-800/50 rounded-xl">
-                    <div className="text-center">
-                      <Car size={16} className="mx-auto text-blue-400 mb-1" />
-                      <span className="text-xs text-gray-300">50+ Cars</span>
-                    </div>
-                    <div className="text-center">
-                      <Shield size={16} className="mx-auto text-green-400 mb-1" />
-                      <span className="text-xs text-gray-300">Insured</span>
-                    </div>
-                    <div className="text-center">
-                      <Star size={16} className="mx-auto text-yellow-400 mb-1" />
-                      <span className="text-xs text-gray-300">Rated</span>
-                    </div>
+              <div className="space-y-2">
+                {navLinks.map((link) => {
+                  const active = location.pathname === link.to;
+                  return (
+                    <Link
+                      key={link.to}
+                      to={link.to}
+                      onClick={() => setIsOpen(false)}
+                      className={`block rounded-2xl px-4 py-3 text-base font-medium transition ${
+                        active
+                          ? "border border-amber-300/18 bg-amber-300/10 text-white"
+                          : "bg-white/[0.03] text-slate-300 hover:bg-white/[0.06] hover:text-white"
+                      }`}
+                    >
+                      {link.name}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="mt-5 rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="rounded-2xl bg-white/[0.04] p-4 text-center">
+                    <Shield className="mx-auto h-5 w-5 text-emerald-300" />
+                    <p className="mt-2 text-sm font-medium text-white">Insured</p>
+                  </div>
+                  <div className="rounded-2xl bg-white/[0.04] p-4 text-center">
+                    <Star className="mx-auto h-5 w-5 text-amber-300" />
+                    <p className="mt-2 text-sm font-medium text-white">5-Star Service</p>
                   </div>
                 </div>
+
+                <a
+                  href="tel:+923125430959"
+                  className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-medium text-slate-100"
+                >
+                  <Phone className="h-4 w-4 text-amber-200" />
+                  +92 312 5430959
+                </a>
+
+                <Link
+                  to="/book"
+                  onClick={() => setIsOpen(false)}
+                  className="dws-button-primary mt-4 w-full px-4 py-3 text-sm"
+                >
+                  Book now
+                </Link>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Schema.org Breadcrumb for Current Page */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BreadcrumbList",
-              "itemListElement": [
-                {
-                  "@type": "ListItem",
-                  "position": 1,
-                  "name": "Home",
-                  "item": "https://drivewithstyles.com"
-                },
-                ...(location.pathname !== "/" ? [{
-                  "@type": "ListItem",
-                  "position": 2,
-                  "name": navLinks.find(link => link.to === location.pathname)?.name || "Page",
-                  "item": `https://drivewithstyles.com${location.pathname}`
-                }] : [])
-              ]
-            })
-          }}
-        />
       </header>
     </>
   );
