@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { CarFront, Menu, Phone, Shield, Star, X } from "lucide-react";
+import {  Menu, Phone, Shield, Star, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
