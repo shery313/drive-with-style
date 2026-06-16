@@ -78,7 +78,9 @@ const Footer = () => {
             <div>
               <Link to="/" className="inline-flex items-center gap-3">
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-amber-300/18 bg-[linear-gradient(135deg,rgba(217,119,6,0.18),rgba(37,99,235,0.18))] text-amber-100">
-                  <CarFront className="h-5 w-5" />
+                  {/* <div className="flex h-15 w-15 items-center justify-center rounded-2xl border border-amber-300/18 bg-[linear-gradient(135deg,rgba(217,119,6,0.18),rgba(37,99,235,0.2))] text-amber-100 shadow-[0_0_40px_rgba(245,158,11,0.12)]"> */}
+                <img className="" src="/logo.png" alt="" />
+              {/* </div> */}
                 </div>
                 <div>
                   <span className="block text-xl font-semibold tracking-tight text-white">
