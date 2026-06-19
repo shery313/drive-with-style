@@ -181,7 +181,7 @@ const Home = () => {
               <div className="dws-glass relative overflow-hidden rounded-[32px] p-5">
                 <div className="relative overflow-hidden rounded-[26px]">
                   <video
-                    className="h-full w-full rounded-[26px] object-cover"
+                    className="h-[380px] w-full rounded-[26px] object-cover sm:h-[430px] lg:h-[500px]"
                     autoPlay
                     muted
                     loop
@@ -191,10 +191,10 @@ const Home = () => {
                   >
                     <source src="/df.mp4" type="video/mp4" />
                   </video>
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050b14]/75 via-[#050b14]/10 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#050b14]/45 via-[#050b14]/5 to-transparent" />
                 </div>
 
-                <div className="absolute inset-x-5 bottom-5">
+                <div className="mt-5">
                   <div className="grid gap-4 md:grid-cols-[1fr_0.72fr]">
                     <div className="rounded-[24px] border border-white/10 bg-[#07111d]/78 p-5 backdrop-blur-2xl">
                       <div className="flex items-center justify-between gap-4">

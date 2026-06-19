@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { CarFront, Menu, Phone, Shield, Star, X } from "lucide-react";
+import {  Menu, Phone, Shield, Star, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
@@ -36,8 +36,8 @@ const Navbar = () => {
               className="flex items-center gap-3 rounded-2xl px-2 py-2 transition hover:bg-white/6"
               aria-label="Drive With Style home"
             >
-              <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-amber-300/18 bg-[linear-gradient(135deg,rgba(217,119,6,0.18),rgba(37,99,235,0.2))] text-amber-100 shadow-[0_0_40px_rgba(245,158,11,0.12)]">
-                <CarFront className="h-5 w-5" />
+              <div className="flex h-15 w-15 items-center justify-center rounded-2xl border border-amber-300/18 bg-[linear-gradient(135deg,rgba(217,119,6,0.18),rgba(37,99,235,0.2))] text-amber-100 shadow-[0_0_40px_rgba(245,158,11,0.12)]">
+                <img className="" src="/logo.png" alt="" />
               </div>
               <div>
                 <span className="block text-lg font-semibold tracking-tight text-white">
