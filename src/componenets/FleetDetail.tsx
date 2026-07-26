@@ -34,6 +34,13 @@ type CarType = {
   luggage_capacity: number;
   insurance_coverage: boolean;
   slug: string;
+  gallery_images: {
+    id: number;
+    image: string;
+    alt_text: string;
+    caption: string;
+    sort_order: number;
+  }[];
 };
 
 const getVehicleTone = (vehicleType: CarType["vehicle_type"]) => {
@@ -172,8 +179,17 @@ const FleetDetail = () => {
   }
 
   const seoData = generateSeoData(car);
-  const additionalImages = [car.image, car.image, car.image];
-  const displayedImage = additionalImages[currentImage] || car.image;
+  const galleryImages = [
+    {
+      id: 0,
+      image: car.image,
+      alt_text: `${car.name} cover image`,
+      caption: "Cover",
+    },
+    ...(car.gallery_images || []),
+  ];
+  const displayedImage = galleryImages[currentImage]?.image || car.image;
+  const displayedAlt = galleryImages[currentImage]?.alt_text || `${car.name} available for rent in Islamabad`;
   const vehicleTone = getVehicleTone(car.vehicle_type);
 
   return (
@@ -235,7 +251,7 @@ const FleetDetail = () => {
                   <div className="overflow-hidden rounded-[28px]">
                     <img
                       src={displayedImage}
-                      alt={`${car.name} available for rent in Islamabad`}
+                      alt={displayedAlt}
                       className="h-[460px] w-full object-cover"
                       loading="eager"
                       itemProp="image"
@@ -243,10 +259,10 @@ const FleetDetail = () => {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-3 gap-4">
-                  {additionalImages.map((img, index) => (
+                <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+                  {galleryImages.map((galleryImage, index) => (
                     <button
-                      key={`${car.slug}-${index}`}
+                      key={`${car.slug}-${galleryImage.id}-${index}`}
                       type="button"
                       onClick={() => setCurrentImage(index)}
                       className={`overflow-hidden rounded-[22px] border p-2 transition ${
@@ -254,12 +270,18 @@ const FleetDetail = () => {
                           ? "border-amber-300/28 bg-amber-300/10"
                           : "border-white/10 bg-white/[0.04] hover:bg-white/[0.08]"
                       }`}
+                      aria-label={`View ${galleryImage.alt_text || `${car.name} image ${index + 1}`}`}
                     >
                       <img
-                        src={img}
-                        alt={`${car.name} preview ${index + 1}`}
+                        src={galleryImage.image}
+                        alt={galleryImage.alt_text || `${car.name} preview ${index + 1}`}
                         className="h-24 w-full rounded-[18px] object-cover"
                       />
+                      {galleryImage.caption && (
+                        <span className="mt-2 block truncate text-xs font-medium text-slate-500">
+                          {galleryImage.caption}
+                        </span>
+                      )}
                     </button>
                   ))}
                 </div>

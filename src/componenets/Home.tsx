@@ -16,6 +16,7 @@ import {
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
 
+import PromotionShowcase from "./PromotionShowcase";
 import TrustedBy from "./TrustedBy";
 import { SERVER_URL } from "../constant";
 
@@ -237,6 +238,8 @@ const Home = () => {
             </motion.div>
           </div>
         </section>
+
+        <PromotionShowcase />
 
         <section className="px-4 py-16 sm:px-6 lg:px-8">
           <div className="mx-auto grid max-w-7xl gap-5 sm:grid-cols-2 xl:grid-cols-4">

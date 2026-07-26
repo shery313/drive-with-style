@@ -4,6 +4,8 @@ import { Menu, Phone, Shield, Star, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
+import AnnouncementBar from "./AnnouncementBar";
+
 const navLinks = [
   { name: "Home", to: "/" },
   { name: "Fleet", to: "/fleet" },
@@ -29,6 +31,7 @@ const Navbar = () => {
       </Helmet>
 
       <header className="sticky top-0 z-50 border-b border-black/10 bg-[#fffdf7]/90 shadow-[0_14px_40px_rgba(18,23,20,0.08)] backdrop-blur-xl">
+        <AnnouncementBar />
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
           <div className="flex h-[76px] items-center justify-between">
             <Link
