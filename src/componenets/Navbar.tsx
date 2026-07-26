@@ -36,14 +36,13 @@ const Navbar = () => {
               className="flex items-center gap-3 rounded-lg px-2 py-2 transition hover:bg-black/[0.04]"
               aria-label="Drive With Style home"
             >
-              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-black/10 bg-white">
-                <img className="h-full w-full object-cover" src="/logo.png" alt="" />
+              <div className="flex h-14 w-14  items-center  justify-center overflow-hidden rounded-1xl border border-black/10 p-1">
+                <img className="h-full w-full " src="/logo1.jpg" alt="drive with style logo" />
               </div>
               <div>
-                <span className="block text-lg font-semibold tracking-tight text-[#121714]">
-                  Drive With Style
-                </span>
-                <span className="block text-xs uppercase tracking-[0.18em] text-[#69746f]">
+                <span className="block text-lg font-semibold tracking-tight text-[#121714] font-serif">
+                  Drive with style                </span>
+                <span className="block text-xs uppercase font-serif tracking-[0.18em] text-[#69746f]">
                   Islamabad / Pakistan
                 </span>
               </div>

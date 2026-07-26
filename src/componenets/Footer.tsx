@@ -79,14 +79,14 @@ const Footer = () => {
           <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.05fr_0.7fr_0.95fr]">
             <div>
               <Link to="/" className="inline-flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-black/10 bg-white">
-                  <img className="h-full w-full object-cover" src="/logo.png" alt="" />
+                <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-1xl  border border-black/10 bg-white">
+                  <img className=" object-cover" src="/logo1.jpg" alt="" />
                 </div>
                 <div>
-                  <span className="block text-xl font-semibold tracking-tight text-[#121714]">
+                  <span className="block text-xl font-semibold  font-serif tracking-tight text-[#121714]">
                     Drive With Style
                   </span>
-                  <span className="block text-xs uppercase tracking-[0.18em] text-[#69746f]">
+                  <span className="block  font-serif text-xs uppercase tracking-[0.18em] text-[#69746f]">
                     Premium Car Rentals
                   </span>
                 </div>
