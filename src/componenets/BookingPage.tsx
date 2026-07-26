@@ -447,9 +447,9 @@ const BookingPage = () => {
         </script>
       </Helmet>
 
-      <main className="dws-page min-h-screen text-slate-100" itemScope itemType="https://schema.org/Service">
+      <main className="dws-page booking-page min-h-screen text-slate-100" itemScope itemType="https://schema.org/Service">
         {/* Hero Header */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-indigo-900 text-white py-20">
+        <section className="booking-hero relative overflow-hidden text-white">
           <div className="absolute inset-0">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"></div>
             <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"></div>
@@ -465,22 +465,18 @@ const BookingPage = () => {
                 <Sparkles className="w-4 h-4" />
                 <span className="text-sm font-semibold tracking-wide">Secure Booking</span>
               </div>
-              <h1 className="text-4xl sm:text-5xl font-bold mb-6 leading-tight" itemProp="name">
-                Reserve Your 
-                <span className="block mt-2">
-                  <span className="dws-title-gradient">
-                    Premium Vehicle
-                  </span>
-                </span>
+              <h1 className="text-4xl sm:text-6xl font-bold mb-6 leading-[1.05] tracking-[-0.05em]" itemProp="name">
+                Your next drive,
+                <span className="block mt-2 text-orange-400">reserved in minutes.</span>
               </h1>
               <p className="text-xl text-gray-300 leading-relaxed" itemProp="description">
-                Complete our secure booking process to reserve your luxury vehicle in Islamabad
+                Choose the car. Set the details. We’ll take care of everything else.
               </p>
             </motion.div>
           </div>
         </section>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
+        <div className="booking-shell max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Back Button */}
           {step < 4 && (
             <motion.div
@@ -501,7 +497,7 @@ const BookingPage = () => {
 
           {/* Progress Steps */}
           {step < 4 && (
-            <nav aria-label="Booking progress" className="mb-12">
+            <nav aria-label="Booking progress" className="booking-progress mb-12">
               <div className="relative">
                 <div className="absolute top-1/2 left-0 right-0 h-2 bg-gray-200 rounded-full -z-10"></div>
                 <div 

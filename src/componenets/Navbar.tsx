@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import {  Menu, Phone, Shield, Star, X } from "lucide-react";
+import { Menu, Phone, Shield, Star, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
@@ -28,43 +28,44 @@ const Navbar = () => {
         <script type="application/ld+json">{JSON.stringify(structuredData)}</script>
       </Helmet>
 
-      <header className="sticky top-0 z-50 border-b border-white/8 bg-[#07111d]/80 backdrop-blur-2xl">
+      <header className="sticky top-0 z-50 border-b border-black/10 bg-[#fffdf7]/90 shadow-[0_14px_40px_rgba(18,23,20,0.08)] backdrop-blur-xl">
         <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
-          <div className="flex h-20 items-center justify-between">
+          <div className="flex h-[76px] items-center justify-between">
             <Link
               to="/"
-              className="flex items-center gap-3 rounded-2xl px-2 py-2 transition hover:bg-white/6"
+              className="flex items-center gap-3 rounded-lg px-2 py-2 transition hover:bg-black/[0.04]"
               aria-label="Drive With Style home"
             >
-              <div className="flex h-15 w-15 items-center justify-center rounded-2xl border border-amber-300/18 bg-[linear-gradient(135deg,rgba(217,119,6,0.18),rgba(37,99,235,0.2))] text-amber-100 shadow-[0_0_40px_rgba(245,158,11,0.12)]">
-                <img className="" src="/logo.png" alt="" />
+              <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-black/10 bg-white">
+                <img className="h-full w-full object-cover" src="/logo.png" alt="" />
               </div>
               <div>
-                <span className="block text-lg font-semibold tracking-tight text-white">
+                <span className="block text-lg font-semibold tracking-tight text-[#121714]">
                   Drive With Style
                 </span>
-                <span className="block text-xs uppercase tracking-[0.24em] text-slate-400">
-                  Premium Car Rentals
+                <span className="block text-xs uppercase tracking-[0.18em] text-[#69746f]">
+                  Islamabad / Pakistan
                 </span>
               </div>
             </Link>
 
             <div className="hidden items-center gap-4 lg:flex">
-              <ul className="flex items-center gap-1 rounded-full border border-white/8 bg-white/[0.04] px-2 py-2">
+              <ul className="flex items-center gap-1 rounded-full border border-black/10 bg-white/70 px-2 py-2">
                 {navLinks.map((link) => {
                   const active = location.pathname === link.to;
+
                   return (
                     <li key={link.to}>
                       <Link
                         to={link.to}
                         className={`relative rounded-full px-4 py-2.5 text-sm font-medium transition ${
-                          active ? "text-white" : "text-slate-300 hover:text-white"
+                          active ? "text-[#121714]" : "text-[#69746f] hover:text-[#121714]"
                         }`}
                       >
                         {active && (
                           <motion.span
                             layoutId="nav-pill"
-                            className="absolute inset-0 rounded-full border border-amber-300/18 bg-amber-300/10"
+                            className="absolute inset-0 rounded-full border border-[#006d77]/20 bg-[#006d77]/10"
                             transition={{ type: "spring", duration: 0.55, bounce: 0.18 }}
                           />
                         )}
@@ -75,16 +76,16 @@ const Navbar = () => {
                 })}
               </ul>
 
-              <div className="hidden items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/10 px-4 py-2 text-sm font-medium text-emerald-200 xl:flex">
+              <div className="hidden items-center gap-2 rounded-full border border-[#2f7d5c]/20 bg-[#2f7d5c]/10 px-4 py-2 text-sm font-medium text-[#2f7d5c] xl:flex">
                 <Shield className="h-4 w-4" />
                 Fully insured fleet
               </div>
 
               <a
                 href="tel:+923125430959"
-                className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-medium text-slate-200 transition hover:bg-white/[0.08] xl:flex"
+                className="hidden items-center gap-2 rounded-full border border-black/10 bg-white/70 px-4 py-3 text-sm font-medium text-[#24302b] transition hover:bg-white xl:flex"
               >
-                <Phone className="h-4 w-4 text-amber-200" />
+                <Phone className="h-4 w-4 text-[#f05a28]" />
                 +92 312 5430959
               </a>
 
@@ -94,8 +95,9 @@ const Navbar = () => {
             </div>
 
             <button
+              type="button"
               onClick={() => setIsOpen((open) => !open)}
-              className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] p-2.5 text-slate-200 transition hover:bg-white/[0.08] lg:hidden"
+              className="inline-flex items-center justify-center rounded-lg border border-black/10 bg-white/70 p-2.5 text-[#121714] transition hover:bg-white lg:hidden"
               aria-expanded={isOpen}
               aria-label={isOpen ? "Close main menu" : "Open main menu"}
               aria-controls="mobile-menu"
@@ -113,20 +115,21 @@ const Navbar = () => {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.25 }}
-              className="border-t border-white/8 bg-[#07111d]/96 px-4 pb-6 pt-4 backdrop-blur-2xl lg:hidden"
+              className="border-t border-black/10 bg-[#fffdf7]/96 px-4 pb-6 pt-4 backdrop-blur-xl lg:hidden"
             >
               <div className="space-y-2">
                 {navLinks.map((link) => {
                   const active = location.pathname === link.to;
+
                   return (
                     <Link
                       key={link.to}
                       to={link.to}
                       onClick={() => setIsOpen(false)}
-                      className={`block rounded-2xl px-4 py-3 text-base font-medium transition ${
+                      className={`block rounded-lg px-4 py-3 text-base font-medium transition ${
                         active
-                          ? "border border-amber-300/18 bg-amber-300/10 text-white"
-                          : "bg-white/[0.03] text-slate-300 hover:bg-white/[0.06] hover:text-white"
+                          ? "border border-[#006d77]/20 bg-[#006d77]/10 text-[#121714]"
+                          : "bg-black/[0.03] text-[#69746f] hover:bg-black/[0.06] hover:text-[#121714]"
                       }`}
                     >
                       {link.name}
@@ -135,23 +138,23 @@ const Navbar = () => {
                 })}
               </div>
 
-              <div className="mt-5 rounded-[24px] border border-white/10 bg-white/[0.04] p-4">
+              <div className="mt-5 rounded-lg border border-black/10 bg-white/70 p-4">
                 <div className="grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl bg-white/[0.04] p-4 text-center">
-                    <Shield className="mx-auto h-5 w-5 text-emerald-300" />
-                    <p className="mt-2 text-sm font-medium text-white">Insured</p>
+                  <div className="rounded-lg bg-[#2f7d5c]/10 p-4 text-center">
+                    <Shield className="mx-auto h-5 w-5 text-[#2f7d5c]" />
+                    <p className="mt-2 text-sm font-medium text-[#121714]">Insured</p>
                   </div>
-                  <div className="rounded-2xl bg-white/[0.04] p-4 text-center">
-                    <Star className="mx-auto h-5 w-5 text-amber-300" />
-                    <p className="mt-2 text-sm font-medium text-white">5-Star Service</p>
+                  <div className="rounded-lg bg-[#f05a28]/10 p-4 text-center">
+                    <Star className="mx-auto h-5 w-5 text-[#f05a28]" />
+                    <p className="mt-2 text-sm font-medium text-[#121714]">5-Star Service</p>
                   </div>
                 </div>
 
                 <a
                   href="tel:+923125430959"
-                  className="mt-4 flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-medium text-slate-100"
+                  className="mt-4 flex items-center justify-center gap-2 rounded-lg border border-black/10 bg-white px-4 py-3 text-sm font-medium text-[#121714]"
                 >
-                  <Phone className="h-4 w-4 text-amber-200" />
+                  <Phone className="h-4 w-4 text-[#f05a28]" />
                   +92 312 5430959
                 </a>
 
