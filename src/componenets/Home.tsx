@@ -181,7 +181,8 @@ const Home = () => {
 
               <div className="dws-glass relative overflow-hidden rounded-[32px] p-5">
                 <div className="relative overflow-hidden rounded-[26px]">
-                  <video
+                  <img src="/hondacity1.2.jpg" alt="" />
+                  {/* <video
                     className="h-[380px] w-full rounded-[26px] object-cover sm:h-[430px] lg:h-[500px]"
                     autoPlay
                     muted
@@ -191,7 +192,7 @@ const Home = () => {
                     aria-label="Premium car rental showcase"
                   >
                     <source src="/df.mp4" type="video/mp4" />
-                  </video>
+                  </video> */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#050b14]/45 via-[#050b14]/5 to-transparent" />
                 </div>
 
