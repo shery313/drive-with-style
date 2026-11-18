@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Navbar from './componenets/Navbar'
@@ -8,11 +9,15 @@ import About from './componenets/About'
 import Contact from './componenets/Conctact'
 import ScrollToTop from './componenets/ScrollToTop'
 import WhatsAppButton from './componenets/WhatsappButton.'
-import BookingPage from './componenets/BookingPage'
 import FleetDetail from './componenets/FleetDetail'
 
 
-
+function RedirectToNewBooking() {
+  useEffect(() => {
+    window.location.href = 'https://app.drivewithstyles.com/book'
+  }, [])
+  return null
+}
 function App() {
  
 
@@ -28,8 +33,8 @@ function App() {
           <Route path="/fleet/:slug" element={<FleetDetail  />} />
           <Route path="/about" element={<About  />} />
           <Route path="/contact" element={<Contact  />} />
-          <Route path="/book" element={<BookingPage  />} />
-          <Route path="/book/:slug" element={<BookingPage  />} />
+          <Route path="/book" element={<RedirectToNewBooking  />} />
+          <Route path="/book/:slug" element={<RedirectToNewBooking  />} />
         </Routes>
         <Footer />
       
